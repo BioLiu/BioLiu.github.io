@@ -1,0 +1,917 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="基因组、统计学," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="今天，我开始了第一次博客的书写，也借此将我在为知笔记、有道云笔记中记录的内容，转移到博客中。博文中会有一些代码，为了使阅读更加原汁原味，会尽量采用Markdown的形式进行书写。该系列博文，主要记录我在学习霍普金斯大学生物信息学大神jtleek讲解基因组分析中的统计学知识，重点介绍标准化、探索性分析、线性模型、检验及多重检验等。">
+<meta name="keywords" content="基因组、统计学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基因组分析中统计学原理（一）">
+<meta property="og:url" content="http://yoursite.com/2017/07/11/基因组分析中统计学原理（一）/index.html">
+<meta property="og:site_name" content="BioLiu">
+<meta property="og:description" content="今天，我开始了第一次博客的书写，也借此将我在为知笔记、有道云笔记中记录的内容，转移到博客中。博文中会有一些代码，为了使阅读更加原汁原味，会尽量采用Markdown的形式进行书写。该系列博文，主要记录我在学习霍普金斯大学生物信息学大神jtleek讲解基因组分析中的统计学知识，重点介绍标准化、探索性分析、线性模型、检验及多重检验等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/2017/07what_is_data.png">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/2017/07data_representing.png">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/2017/07fixed%20value.png">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/paticular%20sample.png">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/genome_staticstidy%20data.png">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/cook%20book.png">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/Recipe.png">
+<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/genome_staticsreproducibility_analysis.png">
+<meta property="og:updated_time" content="2017-07-11T13:30:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基因组分析中统计学原理（一）">
+<meta name="twitter:description" content="今天，我开始了第一次博客的书写，也借此将我在为知笔记、有道云笔记中记录的内容，转移到博客中。博文中会有一些代码，为了使阅读更加原汁原味，会尽量采用Markdown的形式进行书写。该系列博文，主要记录我在学习霍普金斯大学生物信息学大神jtleek讲解基因组分析中的统计学知识，重点介绍标准化、探索性分析、线性模型、检验及多重检验等。">
+<meta name="twitter:image" content="http://osrxne9le.bkt.clouddn.com/2017/07what_is_data.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/11/基因组分析中统计学原理（一）/"/>
+
+
+
+
+
+  <title>基因组分析中统计学原理（一） | BioLiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BioLiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生信爱好者，小白进阶中</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/11/基因组分析中统计学原理（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liu Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BioLiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基因组分析中统计学原理（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T17:04:09+08:00">
+                2017-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/11/基因组分析中统计学原理（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/07/11/基因组分析中统计学原理（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天，我开始了第一次博客的书写，也借此将我在为知笔记、有道云笔记中记录的内容，转移到博客中。博文中会有一些<code>代码</code>，为了使阅读更加原汁原味，会尽量采用Markdown的形式进行书写。该系列博文，主要记录我在学习霍普金斯大学生物信息学大神<a href="https://github.com/jtleek" target="_blank" rel="external">jtleek</a>讲解基因组分析中的统计学知识，重点介绍<code>标准化</code>、<code>探索性分析</code>、<code>线性模型</code>、<code>检验</code>及<code>多重检验</code>等。<br><a id="more"></a></p>
+<p>首先，贴出<a href="http://jtleek.com/genstats_site/" target="_blank" rel="external">课程内容</a>及课程中<a href="https://github.com/jtleek/genstats" target="_blank" rel="external">R语言代码</a>我强烈建议各位博友接触第一手信息，毕竟个人能力有限，无法将大神的内容原汁原味地进行传递。</p>
+<blockquote>
+<h1 id="本系列主要包括四部分内容："><a href="#本系列主要包括四部分内容：" class="headerlink" title="本系列主要包括四部分内容："></a>本系列主要包括四部分内容：</h1></blockquote>
+<ul>
+<li><h2 id="可视化分析"><a href="#可视化分析" class="headerlink" title="可视化分析"></a>可视化分析</h2><ul>
+<li>核心：作图，科学怀疑论</li>
+</ul>
+</li>
+<li><h2 id="标准化及预处理"><a href="#标准化及预处理" class="headerlink" title="标准化及预处理"></a>标准化及预处理</h2><ul>
+<li>核心：使样本/数据具有可比性</li>
+</ul>
+</li>
+<li><h2 id="统计模型"><a href="#统计模型" class="headerlink" title="统计模型"></a>统计模型</h2><ul>
+<li>核心：线性模型，p值</li>
+</ul>
+</li>
+<li><h2 id="统计总结"><a href="#统计总结" class="headerlink" title="统计总结"></a>统计总结</h2><ul>
+<li>核心：基因富集/模型检验</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<h1 id="第一部分-可视化"><a href="#第一部分-可视化" class="headerlink" title="第一部分:可视化"></a>第一部分:可视化</h1></blockquote>
+<h2 id="可视化工具"><a href="#可视化工具" class="headerlink" title="可视化工具"></a>可视化工具</h2><p>可用的可视化工具，来源主要有<code>Github</code>,<code>R packages</code>,<code>Bioconductor</code>等，可以通过<code>downloads</code>,<code>posts</code>,<code>build</code>等状态，去了解一个包的可信度。同时，要学会通过<code>Bioconductor support</code>,<code>stackoverflow</code>,<code>e-mail</code>的形式，寻求帮助。</p>
+<blockquote>
+<h2 id="正确的询问问题的方式"><a href="#正确的询问问题的方式" class="headerlink" title="正确的询问问题的方式"></a>正确的询问问题的方式</h2></blockquote>
+<ul>
+<li><p>所用的原始数据，软件名称及具体版本，包括操作系统的版本；</p>
+</li>
+<li><p>说明自己的目的及自己所用的命令；</p>
+</li>
+</ul>
+<h3 id="下边，请让我们先看一下数据的定义"><a href="#下边，请让我们先看一下数据的定义" class="headerlink" title="下边，请让我们先看一下数据的定义"></a>下边，请让我们先看一下数据的定义</h3><p><img src="http://osrxne9le.bkt.clouddn.com/2017/07what_is_data.png" alt="基因组研究中，数据的含义"></p>
+<ul>
+<li><p>定性内容包括：<code>来源</code>，<code>性别</code>，<code>处理</code>等;</p>
+</li>
+<li><p>定量内容包括：<code>身高</code>，<code>体重</code>，<code>血压</code>等;</p>
+</li>
+</ul>
+<h4 id="区分Raw-data和Processed-data"><a href="#区分Raw-data和Processed-data" class="headerlink" title="区分Raw data和Processed data"></a>区分<em>Raw data</em>和<em>Processed data</em></h4><ul>
+<li><p>Raw data：没有经过任何计算的数据（从测序仪中下机的数据，可以称之为Raw data）</p>
+</li>
+<li><p>Processed data: 处理、整理过程中及最终产生的数据(例如通过 质控、Cufflinks软件处理过程中产生的数据等)</p>
+</li>
+</ul>
+<blockquote>
+<h2 id="数据的重演性"><a href="#数据的重演性" class="headerlink" title="数据的重演性"></a>数据的重演性</h2></blockquote>
+<p>我们要努力使得我们分析的样本数据，能够代表总体的实际情况</p>
+<p><img src="http://osrxne9le.bkt.clouddn.com/2017/07data_representing.png" alt="数据重演性示意图"></p>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><p>通常情况下，统计学分析中，将其作为一个固定值，如图所示：</p>
+<p><img src="http://osrxne9le.bkt.clouddn.com/2017/07fixed%20value.png" alt="固定值"></p>
+<p>我们希望通过展示局部样本中的值，来映射整体样本的情况：</p>
+<p><img src="http://osrxne9le.bkt.clouddn.com/paticular%20sample.png" alt="部分样本"></p>
+<ul>
+<li><p>数据通过字母表示</p>
+<ul>
+<li>H表示身高，W表示体重，C表示数量</li>
+</ul>
+</li>
+<li><p>下标用来表示不同的样本</p>
+<ul>
+<li>C1,C2,C3表示三个不同的人样本</li>
+</ul>
+</li>
+<li><p>有时，也用X表示所有的值</p>
+<ul>
+<li>X1,X2,X3表示个体123的数量</li>
+</ul>
+</li>
+<li><p>其他下标</p>
+<ul>
+<li>X11表示个体1的gene1</li>
+</ul>
+</li>
+<li><p>参数通常用希腊字母表示</p>
+<ul>
+<li>θ用来表示样本中平均身高</li>
+</ul>
+</li>
+<li><p>^ 符号用来表示期望</p>
+<ul>
+<li>θ^ 用来表示样本中身高的期望值</li>
+</ul>
+</li>
+<li><p>Y通常表示结果，X表示变量</p>
+</li>
+</ul>
+<blockquote>
+<p>让我们重新回到数据分析重演性的问题上</p>
+</blockquote>
+<p>要做到数据分析具有重演性，首先要做到以下几点：</p>
+<ul>
+<li><p>原始数据；</p>
+</li>
+<li><p>一个整理好的数据集；</p>
+</li>
+<li><p>记录对数据集中数据进行改变的代码，及其改变的值；</p>
+</li>
+<li><p>完整明确的数据处理步骤</p>
+</li>
+</ul>
+<p>整理的数据列表：</p>
+<p><img src="http://osrxne9le.bkt.clouddn.com/genome_staticstidy%20data.png" alt="整理的数据列表"></p>
+<p>完善的数据处理说明：</p>
+<ul>
+<li><p>变量名称</p>
+</li>
+<li><p>对变量的描述</p>
+</li>
+<li><p>变量单位</p>
+</li>
+<li><p>实验设计方案</p>
+</li>
+</ul>
+<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/cook%20book.png" alt="数据处理说明"></p>
+<p>数据处理过程中所使用的代码：</p>
+<p><img src="http://osrxne9le.bkt.clouddn.com/Recipe.png" alt="数据处理流程"></p>
+<p>此外，需要明确所使用软件的名称，版本及分析过程中所使用的参数，在使用R语言的时候，则可以通过<code>sessionInfo()</code>和<code>devtools::session_info()</code>记录R及packages的版本。</p>
+<blockquote>
+<p>对于如何进行可重复性的研究，也可以参照视频</p>
+</blockquote>
+<p><img src="http://osrxne9le.bkt.clouddn.com/genome_staticsreproducibility_analysis.png" alt="可重复研究视频"></p>
+<p>考虑到现在比较流行碎片化阅读，为了保证阅读的质量，第一部分内容就先写到这里了。写博客的时候，突然发现，将自己学习的内容进行共享、输出的过程，真的是比较麻烦并且开心的一件事情。我鼓励大家在学习的过程，也学着写一下博客~~~~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>东西写的不错，赏你个硬币，继续加油！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/wechat.jpg" alt="Liu Chen WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/08/alipay.jpg" alt="Liu Chen Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基因组、统计学/" rel="tag"># 基因组、统计学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/11/基因组分析中统计学原理（二）/" rel="prev" title="基因组分析中统计学原理（二）">
+                基因组分析中统计学原理（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Liu Chen" />
+          <p class="site-author-name" itemprop="name">Liu Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Bioinformatiion、Python、R</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bioliu" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2214834675/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/liu-chen-59-34/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/53599f056741/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-jianshu"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#本系列主要包括四部分内容："><span class="nav-number">1.</span> <span class="nav-text">本系列主要包括四部分内容：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可视化分析"><span class="nav-number">1.1.</span> <span class="nav-text">可视化分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准化及预处理"><span class="nav-number">1.2.</span> <span class="nav-text">标准化及预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计模型"><span class="nav-number">1.3.</span> <span class="nav-text">统计模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计总结"><span class="nav-number">1.4.</span> <span class="nav-text">统计总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一部分-可视化"><span class="nav-number">2.</span> <span class="nav-text">第一部分:可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可视化工具"><span class="nav-number">2.1.</span> <span class="nav-text">可视化工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正确的询问问题的方式"><span class="nav-number">2.2.</span> <span class="nav-text">正确的询问问题的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下边，请让我们先看一下数据的定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">下边，请让我们先看一下数据的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#区分Raw-data和Processed-data"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">区分Raw data和Processed data</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据的重演性"><span class="nav-number">2.3.</span> <span class="nav-text">数据的重演性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bioliu.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/07/11/基因组分析中统计学原理（一）/';
+          this.page.identifier = '2017/07/11/基因组分析中统计学原理（一）/';
+          this.page.title = '基因组分析中统计学原理（一）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bioliu.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
