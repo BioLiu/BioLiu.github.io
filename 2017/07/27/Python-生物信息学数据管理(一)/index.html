@@ -102,7 +102,7 @@
 <meta property="og:description" content="从这个系列开始，我将记录我在学习《Python生物信息学数据管理》这本书的心得。首先，要感谢本书的译者：卢宏超老师、陈一情老师及李绍娟老师。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//Python/Python.jpg">
-<meta property="og:updated_time" content="2017-07-27T09:49:27.353Z">
+<meta property="og:updated_time" content="2017-07-28T08:46:39.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 生物信息学数据管理(一)">
 <meta name="twitter:description" content="从这个系列开始，我将记录我在学习《Python生物信息学数据管理》这本书的心得。首先，要感谢本书的译者：卢宏超老师、陈一情老师及李绍娟老师。">
@@ -360,6 +360,15 @@
 <p>此处代码，通过<code>join</code>把out中数据用<code>\n</code>连接<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>out</div><div class="line"><span class="string">'16.38\n139.9\n441.16'</span></div></pre></td></tr></table></figure></p>
 <p>计算中位数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">data = [<span class="number">3.53</span>,<span class="number">3.47</span>,<span class="number">3.52</span>]</div><div class="line">data.sort()</div><div class="line">mid = int(len(data)/<span class="number">2</span>)</div><div class="line"><span class="keyword">if</span> len(data) % <span class="number">2</span> ==<span class="number">0</span>:</div><div class="line">	median = (data[mid<span class="number">-1</span>]+data[mid]) / <span class="number">2.0</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">	median = data[mid]</div><div class="line">print(median)</div><div class="line"><span class="number">3.52</span></div></pre></td></tr></table></figure></p>
 <p>统计碱基分布<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">percent = []</div><div class="line">list = [<span class="string">"A"</span>,<span class="string">"T"</span>,<span class="string">"G"</span>,<span class="string">"C"</span>]</div><div class="line">f = open(<span class="string">'E:/python-excise/Biological_Python/seq.fa'</span>)</div><div class="line"><span class="keyword">for</span> t <span class="keyword">in</span> f:</div><div class="line">	seq = t.strip()</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(list)):</div><div class="line">	percent.append(float(seq.count(list[i]))/len(seq))</div><div class="line">print(max(percent))</div></pre></td></tr></table></figure></p>
+<p>计算GC含量<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">percent = []</div><div class="line">f = open(<span class="string">'E:/python-excise/Biological_Python/seq.fa'</span>)</div><div class="line"><span class="keyword">for</span> t <span class="keyword">in</span> f:</div><div class="line">	seq = t.strip()</div><div class="line">	percent.append(float(seq.count(<span class="string">"G"</span>)+seq.count(<span class="string">"C"</span>))/len(seq))</div><div class="line">print(max(percent))</div></pre></td></tr></table></figure></p>
+<blockquote>
+<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2></blockquote>
+<p>对文本，尤其是数字进行字符串格式化，可以在很大程度上提高可读性</p>
+<p>可在数值转换成字符串时，使用<code>%</code>指示要分配给整数的位数：<br><code>%3i</code>表示将其格式化为：<code>3位数的整数</code>，需要格式化的值在<code>()</code>中<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Result: %3i'</span> % (<span class="number">17</span>)</div><div class="line"><span class="string">'Result:  17'</span></div></pre></td></tr></table></figure></p>
+<p>同样，<code>%x.yf</code>用于格式化浮点数，x表示总位数（包括小数点），y表示小数位数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'%8.3f'</span> % (<span class="number">12.3456</span>)</div><div class="line"><span class="string">'  12.346'</span></div></pre></td></tr></table></figure></p>
+<p>用<code>%s</code>格式化字符串:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>name = <span class="string">"E.coli"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Hello, %s'</span> %(name)</div><div class="line"><span class="string">'Hello, E.coli'</span></div></pre></td></tr></table></figure></p>
+<p>通常，<code>%s</code>只用来插入字符串，也可以通过<code>%10s</code>方式右对齐或<code>%-10s</code>方式左对齐<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Hello, %10s'</span> %(name)</div><div class="line"><span class="string">'Hello,     E.coli'</span></div></pre></td></tr></table></figure></p>
+<p>Python也可以实现对多个数据的同时格式化：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'text:%25s numbers:%4i%4i%5.2f'</span> % (<span class="string">'right-justified'</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line"><span class="string">'text:          right-justified numbers:   1   2 3.00'</span></div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -485,8 +494,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -577,6 +595,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化输出"><span class="nav-number">1.</span> <span class="nav-text">格式化输出</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
