@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Python，生物信息学," />
+  <meta name="keywords" content="Python,生物信息学," />
 
 
 
@@ -93,20 +93,18 @@
 
 
 
-<meta name="description" content="从这个系列开始，我将记录我在学习《Python生物信息学数据管理》这本书的心得。首先，要感谢本书的译者：卢宏超老师、陈一情老师及李绍娟老师。">
-<meta name="keywords" content="Python，生物信息学">
+<meta name="description" content="今天，我们主要针对上一次学习的内容，做五关于序列处理方面的联系">
+<meta name="keywords" content="Python,生物信息学">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python 生物信息学数据管理(一)">
-<meta property="og:url" content="http://yoursite.com/2017/07/27/Python-生物信息学数据管理（一）/index.html">
+<meta property="og:title" content="Python 生物信息学数据管理（三）">
+<meta property="og:url" content="http://yoursite.com/2017/07/29/Python-生物信息学数据管理（三）/index.html">
 <meta property="og:site_name" content="BioLiu">
-<meta property="og:description" content="从这个系列开始，我将记录我在学习《Python生物信息学数据管理》这本书的心得。首先，要感谢本书的译者：卢宏超老师、陈一情老师及李绍娟老师。">
+<meta property="og:description" content="今天，我们主要针对上一次学习的内容，做五关于序列处理方面的联系">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//Python/Python.jpg">
-<meta property="og:updated_time" content="2017-07-28T08:46:39.463Z">
+<meta property="og:updated_time" content="2017-07-29T10:02:56.698Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python 生物信息学数据管理(一)">
-<meta name="twitter:description" content="从这个系列开始，我将记录我在学习《Python生物信息学数据管理》这本书的心得。首先，要感谢本书的译者：卢宏超老师、陈一情老师及李绍娟老师。">
-<meta name="twitter:image" content="http://osrxne9le.bkt.clouddn.com//Python/Python.jpg">
+<meta name="twitter:title" content="Python 生物信息学数据管理（三）">
+<meta name="twitter:description" content="今天，我们主要针对上一次学习的内容，做五关于序列处理方面的联系">
 
 
 
@@ -134,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/27/Python-生物信息学数据管理（一）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/29/Python-生物信息学数据管理（三）/"/>
 
 
 
 
 
-  <title>Python 生物信息学数据管理(一) | BioLiu</title>
+  <title>Python 生物信息学数据管理（三） | BioLiu</title>
   
 
 
@@ -279,7 +277,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/Python-生物信息学数据管理（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/Python-生物信息学数据管理（三）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liu Chen">
@@ -296,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理(一)</h1>
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理（三）</h1>
         
 
         <div class="post-meta">
@@ -308,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T16:50:26+08:00">
-                2017-07-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T16:44:43+08:00">
+                2017-07-29
               </time>
             
 
@@ -327,9 +325,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/07/27/Python-生物信息学数据管理（一）/#comments" itemprop="discussionUrl">
+                <a href="/2017/07/29/Python-生物信息学数据管理（三）/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/07/27/Python-生物信息学数据管理（一）/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/07/29/Python-生物信息学数据管理（三）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,21 +352,20 @@
       
 
       
-        <p>从这个系列开始，我将记录我在学习《Python生物信息学数据管理》这本书的心得。首先，要感谢本书的译者：卢宏超老师、陈一情老师及李绍娟老师。<br><img src="http://osrxne9le.bkt.clouddn.com//Python/Python.jpg" alt="Python生物信息学数据管理"><br><a id="more"></a></p>
-<p>写入文件时，换行符</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>out = []</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data = [<span class="number">16.38</span>,<span class="number">139.90</span>,<span class="number">441.16</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> value <span class="keyword">in</span> data:</div><div class="line">	out.append(str(value))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>out = <span class="string">'\n'</span>.join(out)</div></pre></td></tr></table></figure>
-<p>此处代码，通过<code>join</code>把out中数据用<code>\n</code>连接<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>out</div><div class="line"><span class="string">'16.38\n139.9\n441.16'</span></div></pre></td></tr></table></figure></p>
-<p>计算中位数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">data = [<span class="number">3.53</span>,<span class="number">3.47</span>,<span class="number">3.52</span>]</div><div class="line">data.sort()</div><div class="line">mid = int(len(data)/<span class="number">2</span>)</div><div class="line"><span class="keyword">if</span> len(data) % <span class="number">2</span> ==<span class="number">0</span>:</div><div class="line">	median = (data[mid<span class="number">-1</span>]+data[mid]) / <span class="number">2.0</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">	median = data[mid]</div><div class="line">print(median)</div><div class="line"><span class="number">3.52</span></div></pre></td></tr></table></figure></p>
-<p>统计碱基分布<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">percent = []</div><div class="line">list = [<span class="string">"A"</span>,<span class="string">"T"</span>,<span class="string">"G"</span>,<span class="string">"C"</span>]</div><div class="line">f = open(<span class="string">'E:/python-excise/Biological_Python/seq.fa'</span>)</div><div class="line"><span class="keyword">for</span> t <span class="keyword">in</span> f:</div><div class="line">	seq = t.strip()</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(list)):</div><div class="line">	percent.append(float(seq.count(list[i]))/len(seq))</div><div class="line">print(max(percent))</div></pre></td></tr></table></figure></p>
-<p>计算GC含量<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">percent = []</div><div class="line">f = open(<span class="string">'E:/python-excise/Biological_Python/seq.fa'</span>)</div><div class="line"><span class="keyword">for</span> t <span class="keyword">in</span> f:</div><div class="line">	seq = t.strip()</div><div class="line">	percent.append(float(seq.count(<span class="string">"G"</span>)+seq.count(<span class="string">"C"</span>))/len(seq))</div><div class="line">print(max(percent))</div></pre></td></tr></table></figure></p>
-<blockquote>
-<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2></blockquote>
-<p>对文本，尤其是数字进行字符串格式化，可以在很大程度上提高可读性</p>
-<p>可在数值转换成字符串时，使用<code>%</code>指示要分配给整数的位数：<br><code>%3i</code>表示将其格式化为：<code>3位数的整数</code>，需要格式化的值在<code>()</code>中<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Result: %3i'</span> % (<span class="number">17</span>)</div><div class="line"><span class="string">'Result:  17'</span></div></pre></td></tr></table></figure></p>
-<p>同样，<code>%x.yf</code>用于格式化浮点数，x表示总位数（包括小数点），y表示小数位数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'%8.3f'</span> % (<span class="number">12.3456</span>)</div><div class="line"><span class="string">'  12.346'</span></div></pre></td></tr></table></figure></p>
-<p>用<code>%s</code>格式化字符串:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>name = <span class="string">"E.coli"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Hello, %s'</span> %(name)</div><div class="line"><span class="string">'Hello, E.coli'</span></div></pre></td></tr></table></figure></p>
-<p>通常，<code>%s</code>只用来插入字符串，也可以通过<code>%10s</code>方式右对齐或<code>%-10s</code>方式左对齐<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Hello, %10s'</span> %(name)</div><div class="line"><span class="string">'Hello,     E.coli'</span></div></pre></td></tr></table></figure></p>
-<p>Python也可以实现对多个数据的同时格式化：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'text:%25s numbers:%4i%4i%5.2f'</span> % (<span class="string">'right-justified'</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line"><span class="string">'text:          right-justified numbers:   1   2 3.00'</span></div></pre></td></tr></table></figure></p>
+        <p>今天，我们主要针对上一次学习的内容，做五关于序列处理方面的联系<br><a id="more"></a></p>
+<h2 id="读取和写入多序列FASTA文件"><a href="#读取和写入多序列FASTA文件" class="headerlink" title="读取和写入多序列FASTA文件"></a>读取和写入多序列FASTA文件</h2><p>读取FASTA格式的多序列文件，将每个记录（标题+序列）写入不同的文件中</p>
+<p>先看一下多序列FASTA文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&gt;sp|P31946|1433B_HUMAN 14-3-3 protein beta/alpha OS=Homo sapiens GN=YWHAB PE=1 SV=3</div><div class="line">MTMDKSELVQKAKLAEQAERYDDMAAAMKAVTEQGHELSNEERNLLSVAYKNVVGARRSS</div><div class="line">WRVISSIEQKTERNEKKQQMGKEYREKIEAELQDICNDVLELLDKYLIPNATQPESKVFY</div><div class="line">LKMKGDYFRYLSEVASGDNKQTTVSNSQQAYQEAFEISKKEMQPTHPIRLGLALNFSVFY</div><div class="line">YEILNSPEKACSLAKTAFDEAIAELDTLNEESYKDSTLIMQLLRDNLTLWTSENQGDEGD</div><div class="line">AGEGEN</div><div class="line">&gt;sp|P62258|1433E_HUMAN 14-3-3 protein epsilon OS=Homo sapiens GN=YWHAE PE=1 SV=1</div><div class="line">MDDREDLVYQAKLAEQAERYDEMVESMKKVAGMDVELTVEERNLLSVAYKNVIGARRASW</div><div class="line">RIISSIEQKEENKGGEDKLKMIREYRQMVETELKLICCDILDVLDKHLIPAANTGESKVF</div><div class="line">YYKMKGDYHRYLAEFATGNDRKEAAENSLVAYKAASDIAMTELPPTHPIRLGLALNFSVF</div><div class="line">YYEILNSPDRACRLAKAAFDDAIAELDTLSEESYKDSTLIMQLLRDNLTLWTSDMQGDGE</div><div class="line">EQNKEALQDVEDENQ</div><div class="line">&gt;sp|Q04917|1433F_HUMAN 14-3-3 protein eta OS=Homo sapiens GN=YWHAH PE=1 SV=4</div><div class="line">MGDREQLLQRARLAEQAERYDDMASAMKAVTELNEPLSNEDRNLLSVAYKNVVGARRSSW</div><div class="line">RVISSIEQKTMADGNEKKLEKVKAYREKIEKELETVCNDVLSLLDKFLIKNCNDFQYESK</div><div class="line">VFYLKMKGDYYRYLAEVASGEKKNSVVEASEAAYKEAFEISKEQMQPTHPIRLGLALNFS</div><div class="line">VFYYEIQNAPEQACLLAKQAFDDAIAELDTLNEDSYKDSTLIMQLLRDNLTLWTSDQQDE</div><div class="line">EAGEGN</div></pre></td></tr></table></figure></p>
+<p>提示：</p>
+<ul>
+<li>打开输入文件的命令在<code>for</code>循环内部</li>
+<li>选择每个标题的AC号作为文件输出的名字<br>代码如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">fasta_file = open(<span class="string">'mult_seq.fasta'</span>,<span class="string">'r'</span>)</div><div class="line">seq = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fasta_file:</div><div class="line">	<span class="keyword">if</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq == <span class="string">''</span>:<span class="comment">#处理输入文件的第一行</span></div><div class="line">		header = line</div><div class="line">		AC = header.split(<span class="string">'|'</span>)[<span class="number">1</span>].strip()</div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] != <span class="string">'&gt;'</span>:</div><div class="line">		seq = seq + line<span class="comment">#将序列进行拼接</span></div><div class="line">		out_file = open(AC,<span class="string">'w'</span>)</div><div class="line">		out_file.write(header+seq)</div><div class="line">		out_file.close()</div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq != <span class="string">''</span>:<span class="comment">#开始处理下一条核苷酸记录</span></div><div class="line">		header = line</div><div class="line">		AC = header.split(<span class="string">'|'</span>)[<span class="number">1</span>].strip()		</div><div class="line">		out_file = open(AC,<span class="string">'w'</span>)</div><div class="line">		out_file.write(header+seq)</div><div class="line">		out_file.close()</div><div class="line">		seq = <span class="string">''</span></div><div class="line">		header = line</div><div class="line"><span class="comment">#注意处理输入文件最后的一个数据</span></div><div class="line">AC = header.split(<span class="string">'|'</span>)[<span class="number">1</span>].strip()</div><div class="line">out_file = open(AC,<span class="string">'w'</span>)</div><div class="line">out_file.write(header+seq)</div><div class="line">out_file.close()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="读取和过滤FASTA文件"><a href="#读取和过滤FASTA文件" class="headerlink" title="读取和过滤FASTA文件"></a>读取和过滤FASTA文件</h2><blockquote>
+<p><strong>题目要求</strong>：<br>读取FASTA格式的多序列文件，仅当起始氨基酸为甲硫氨酸（M）且含有至少两个色氨酸（W）时，将其写入新文件</p>
+</blockquote>
+<p>为了测试代码，我们认为生成<code>FASTA</code>文件，进行测试：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;seq1</div><div class="line">MDDREDLV</div><div class="line">&gt;seq2</div><div class="line">DDREDLV</div><div class="line">&gt;seq3</div><div class="line">MDDREDLVW</div><div class="line">&gt;seq4</div><div class="line">MDDWREDLVW</div></pre></td></tr></table></figure></p>
+<p>此处与上一篇博文最后一题类似，只是，此处将序列<code>seq</code>作为筛选对象<br>实现结果的代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">fasta_file = open(<span class="string">'star_with_M_test.fasta'</span>,<span class="string">'r'</span>)</div><div class="line">out_file = open(<span class="string">'star_with_M.fasta'</span>,<span class="string">'w'</span>)</div><div class="line">seq = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fasta_file:</div><div class="line">	<span class="keyword">if</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq == <span class="string">''</span>:<span class="comment">#处理输入文件的第一行</span></div><div class="line">		header = line</div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] != <span class="string">'&gt;'</span>:</div><div class="line">		seq = seq + line<span class="comment">#将序列进行拼接</span></div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq != <span class="string">''</span>:<span class="comment">#开始处理下一条核苷酸记录</span></div><div class="line">		<span class="keyword">if</span> seq[<span class="number">0</span>] == <span class="string">'M'</span> <span class="keyword">and</span> seq.count(<span class="string">'W'</span>) &gt; <span class="number">1</span>:</div><div class="line">			out_file.write(header+seq)</div><div class="line">		header = line</div><div class="line">		seq = <span class="string">''</span></div><div class="line"><span class="comment">#注意处理输入文件最后的一个数据</span></div><div class="line"><span class="keyword">if</span> seq[<span class="number">0</span>] == <span class="string">'M'</span> <span class="keyword">and</span> seq.count(<span class="string">'W'</span>) &gt; <span class="number">0</span>:</div><div class="line">	out_file.write(header+seq)</div><div class="line">out_file.close()</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -419,7 +416,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python，生物信息学/" rel="tag"># Python，生物信息学</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/生物信息学/" rel="tag"># 生物信息学</a>
           
         </div>
       
@@ -432,8 +431,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/27/ggplot2常规作图一/" rel="next" title="ggplot2常规作图一">
-                <i class="fa fa-chevron-left"></i> ggplot2常规作图一
+              <a href="/2017/07/28/Python-生物信息学数据管理（二）/" rel="next" title="Python 生物信息学数据管理(二)">
+                <i class="fa fa-chevron-left"></i> Python 生物信息学数据管理(二)
               </a>
             
           </div>
@@ -441,10 +440,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/28/Python-生物信息学数据管理（二）/" rel="prev" title="Python 生物信息学数据管理(二)">
-                Python 生物信息学数据管理(二) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化输出"><span class="nav-number">1.</span> <span class="nav-text">格式化输出</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取和写入多序列FASTA文件"><span class="nav-number">1.</span> <span class="nav-text">读取和写入多序列FASTA文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取和过滤FASTA文件"><span class="nav-number">2.</span> <span class="nav-text">读取和过滤FASTA文件</span></a></li></ol></div>
             
 
           </div>
@@ -752,9 +747,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/07/27/Python-生物信息学数据管理（一）/';
-          this.page.identifier = '2017/07/27/Python-生物信息学数据管理（一）/';
-          this.page.title = 'Python 生物信息学数据管理(一)';
+          this.page.url = 'http://yoursite.com/2017/07/29/Python-生物信息学数据管理（三）/';
+          this.page.identifier = '2017/07/29/Python-生物信息学数据管理（三）/';
+          this.page.title = 'Python 生物信息学数据管理（三）';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://bioliu.disqus.com/embed.js';

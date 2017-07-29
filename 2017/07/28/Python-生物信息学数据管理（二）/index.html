@@ -96,14 +96,14 @@
 <meta name="description" content="今天，我们主要介绍对数据文件的解析。解析数据文件，遵从两点：  如何用列表收集数据 如何通过在程序中做选择来提取想要的数据">
 <meta name="keywords" content="Python,生物信息学">
 <meta property="og:type" content="article">
-<meta property="og:title" content="生物信息学数据管理(二)">
+<meta property="og:title" content="Python 生物信息学数据管理(二)">
 <meta property="og:url" content="http://yoursite.com/2017/07/28/Python-生物信息学数据管理（二）/index.html">
 <meta property="og:site_name" content="BioLiu">
 <meta property="og:description" content="今天，我们主要介绍对数据文件的解析。解析数据文件，遵从两点：  如何用列表收集数据 如何通过在程序中做选择来提取想要的数据">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-29T08:31:10.388Z">
+<meta property="og:updated_time" content="2017-07-29T08:44:56.476Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="生物信息学数据管理(二)">
+<meta name="twitter:title" content="Python 生物信息学数据管理(二)">
 <meta name="twitter:description" content="今天，我们主要介绍对数据文件的解析。解析数据文件，遵从两点：  如何用列表收集数据 如何通过在程序中做选择来提取想要的数据">
 
 
@@ -138,7 +138,7 @@
 
 
 
-  <title>生物信息学数据管理(二) | BioLiu</title>
+  <title>Python 生物信息学数据管理(二) | BioLiu</title>
   
 
 
@@ -294,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">生物信息学数据管理(二)</h1>
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理(二)</h1>
         
 
         <div class="post-meta">
@@ -394,8 +394,8 @@
 </ul>
 <h2 id="解析FASTA格式的多序列文件"><a href="#解析FASTA格式的多序列文件" class="headerlink" title="解析FASTA格式的多序列文件"></a>解析<code>FASTA</code>格式的多序列文件</h2><p>此次，将Homo sapiens 登记记录写入一个新文件</p>
 <p>让我们先看一下<code>FASTA</code>格式多序列文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&gt;sp|P31946|1433B_HUMAN 14-3-3 protein beta/alpha OS=Homo sapiens GN=YWHAB PE=1 SV=3</div><div class="line">MTMDKSELVQKAKLAEQAERYDDMAAAMKAVTEQGHELSNEERNLLSVAYKNVVGARRSS</div><div class="line">WRVISSIEQKTERNEKKQQMGKEYREKIEAELQDICNDVLELLDKYLIPNATQPESKVFY</div><div class="line">LKMKGDYFRYLSEVASGDNKQTTVSNSQQAYQEAFEISKKEMQPTHPIRLGLALNFSVFY</div><div class="line">YEILNSPEKACSLAKTAFDEAIAELDTLNEESYKDSTLIMQLLRDNLTLWTSENQGDEGD</div><div class="line">AGEGEN</div><div class="line">&gt;sp|P62258|1433E_HUMAN 14-3-3 protein epsilon OS=Homo sapiens GN=YWHAE PE=1 SV=1</div><div class="line">MDDREDLVYQAKLAEQAERYDEMVESMKKVAGMDVELTVEERNLLSVAYKNVIGARRASW</div><div class="line">RIISSIEQKEENKGGEDKLKMIREYRQMVETELKLICCDILDVLDKHLIPAANTGESKVF</div><div class="line">YYKMKGDYHRYLAEFATGNDRKEAAENSLVAYKAASDIAMTELPPTHPIRLGLALNFSVF</div><div class="line">YYEILNSPDRACRLAKAAFDDAIAELDTLSEESYKDSTLIMQLLRDNLTLWTSDMQGDGE</div><div class="line">EQNKEALQDVEDENQ</div><div class="line">&gt;sp|Q04917|1433F_HUMAN 14-3-3 protein eta OS=Homo sapiens GN=YWHAH PE=1 SV=4</div><div class="line">MGDREQLLQRARLAEQAERYDDMASAMKAVTELNEPLSNEDRNLLSVAYKNVVGARRSSW</div><div class="line">RVISSIEQKTMADGNEKKLEKVKAYREKIEKELETVCNDVLSLLDKFLIKNCNDFQYESK</div><div class="line">VFYLKMKGDYYRYLAEVASGEKKNSVVEASEAAYKEAFEISKEQMQPTHPIRLGLALNFS</div><div class="line">VFYYEIQNAPEQACLLAKQAFDDAIAELDTLNEDSYKDSTLIMQLLRDNLTLWTSDQQDE</div><div class="line">EAGEGN</div></pre></td></tr></table></figure></p>
-<p>处理代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">fasta_file = open(<span class="string">'SwissProt.fasta'</span>,<span class="string">'r'</span>)</div><div class="line">out_file = open(<span class="string">'SwissProtHuman.fasta'</span>,<span class="string">'w'</span>)</div><div class="line">seq = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fasta_file:</div><div class="line">	<span class="keyword">if</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq == <span class="string">''</span>:<span class="comment">#处理输入文件的第一行</span></div><div class="line">		header = line</div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] != <span class="string">'&gt;'</span>:</div><div class="line">		seq = seq + line<span class="comment">#将序列进行拼接</span></div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq != <span class="string">''</span>:<span class="comment">#检测到下一条核苷酸序列的起始，判断seq是否已经有序列</span></div><div class="line">		<span class="keyword">if</span> <span class="string">"Homo sapiens"</span> <span class="keyword">in</span> header:<span class="comment">#对header进行判断</span></div><div class="line">			out_file.write(header+seq)<span class="comment">#将符合筛选条件的header及seq写入文件</span></div><div class="line">		<span class="comment">#初始化seq及header</span></div><div class="line">		seq = <span class="string">''</span></div><div class="line">		header = line</div><div class="line"><span class="comment"># *特别注意*处理输入文件最后的一个数据</span></div><div class="line"><span class="keyword">if</span> <span class="string">"Homo sapiens"</span> <span class="keyword">in</span> header:</div><div class="line">	out_file.write(header+seq)</div><div class="line">out_file.close()</div></pre></td></tr></table></figure></p>
-<p>要注意思考最后一个<code>if</code>语句的作用，此时<code>header</code>,<code>line</code>及<code>seq</code>变量内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; header</div><div class="line">&apos;&gt;sp|P30443|1A01_HUMAN HLA class I histocompatibility antigen, A-1 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=1\n&apos;</div><div class="line">&gt;&gt;&gt; seq</div><div class="line">&apos;MAVMAPRTLLLLLSGALALTQTWAGSHSMRYFFTSVSRPGRGEPRFIAVGYVDDTQFVRF\nDSDAASQKMEPRAPWIEQEGPEYWDQETRNMKAHSQTDRANLGTLRGYYNQSEDGSHTIQ\nIMYGCDVGPDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITKRKWEAVHAAEQR\nRVYLEGRCVDGLRRYLENGKETLQRTDPPKTHMTHHPISDHEATLRCWALGFYPAEITLT\nWQRDGEDQTQDTELVETRPAGDGTFQKWAAVVVPSGEEQRYTCHVQHEGLPKPLTLRWEL\nSSQPTIPIVGIIAGLVLLGAVITGAVVAAVMWRRKSSDRKGGSYTQAASSDSAQGSDVSL\nTACKV&apos;</div><div class="line">&gt;&gt;&gt; line</div><div class="line">&apos;TACKV&apos;</div></pre></td></tr></table></figure></p>
+<p>处理代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">fasta_file = open(<span class="string">'SwissProt.fasta'</span>,<span class="string">'r'</span>)</div><div class="line">out_file = open(<span class="string">'SwissProtHuman.fasta'</span>,<span class="string">'w'</span>)</div><div class="line">seq = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fasta_file:</div><div class="line">	<span class="keyword">if</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq == <span class="string">''</span>:<span class="comment">#处理输入文件的第一行</span></div><div class="line">		header = line</div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] != <span class="string">'&gt;'</span>:</div><div class="line">		seq = seq + line<span class="comment">#将序列进行拼接</span></div><div class="line">	<span class="keyword">elif</span> line[<span class="number">0</span>] == <span class="string">'&gt;'</span> <span class="keyword">and</span> seq != <span class="string">''</span>:<span class="comment">#检测到下一条核苷酸序列的起始，判断seq是否已经有序列</span></div><div class="line">		<span class="keyword">if</span> <span class="string">"Homo sapiens"</span> <span class="keyword">in</span> header:<span class="comment">#对header进行判断</span></div><div class="line">			out_file.write(header+seq)<span class="comment">#将符合筛选条件的header及seq写入文件</span></div><div class="line">		<span class="comment">#初始化seq及header</span></div><div class="line">		seq = <span class="string">''</span></div><div class="line">		header = line</div><div class="line"><span class="comment"># 注意处理输入文件最后的一个数据</span></div><div class="line"><span class="keyword">if</span> <span class="string">"Homo sapiens"</span> <span class="keyword">in</span> header:</div><div class="line">	out_file.write(header+seq)</div><div class="line">out_file.close()</div></pre></td></tr></table></figure></p>
+<p><strong><code>特别注意</code></strong>思考最后一个<code>if</code>语句的作用，此时<code>header</code>,<code>line</code>及<code>seq</code>变量内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; header</div><div class="line">&apos;&gt;sp|P30443|1A01_HUMAN HLA class I histocompatibility antigen, A-1 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=1\n&apos;</div><div class="line">&gt;&gt;&gt; seq</div><div class="line">&apos;MAVMAPRTLLLLLSGALALTQTWAGSHSMRYFFTSVSRPGRGEPRFIAVGYVDDTQFVRF\nDSDAASQKMEPRAPWIEQEGPEYWDQETRNMKAHSQTDRANLGTLRGYYNQSEDGSHTIQ\nIMYGCDVGPDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITKRKWEAVHAAEQR\nRVYLEGRCVDGLRRYLENGKETLQRTDPPKTHMTHHPISDHEATLRCWALGFYPAEITLT\nWQRDGEDQTQDTELVETRPAGDGTFQKWAAVVVPSGEEQRYTCHVQHEGLPKPLTLRWEL\nSSQPTIPIVGIIAGLVLLGAVITGAVVAAVMWRRKSSDRKGGSYTQAASSDSAQGSDVSL\nTACKV&apos;</div><div class="line">&gt;&gt;&gt; line</div><div class="line">&apos;TACKV&apos;</div></pre></td></tr></table></figure></p>
 <p>此时，显然需要另外一个<code>if</code>语句对<code>header</code>进行判断，否则将失去对最后一条核苷酸记录的筛选</p>
 
       
@@ -471,6 +471,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/29/Python-生物信息学数据管理（三）/" rel="prev" title="Python 生物信息学数据管理（三）">
+                Python 生物信息学数据管理（三） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -549,7 +553,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -780,7 +784,7 @@
         var disqus_config = function () {
           this.page.url = 'http://yoursite.com/2017/07/28/Python-生物信息学数据管理（二）/';
           this.page.identifier = '2017/07/28/Python-生物信息学数据管理（二）/';
-          this.page.title = '生物信息学数据管理(二)';
+          this.page.title = 'Python 生物信息学数据管理(二)';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://bioliu.disqus.com/embed.js';
