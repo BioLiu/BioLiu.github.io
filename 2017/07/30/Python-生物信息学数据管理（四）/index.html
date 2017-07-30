@@ -1,0 +1,801 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,生物信息学," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="今天，我们介绍Python语言中即列表之后，再一强大的工具————字典。通过学习使用字典储存数据和搜索数据，我们能完成更多数据处理任务，如：根据Gene ID及注释文件，从基因组文件中快速提取出相应的序列。">
+<meta name="keywords" content="Python,生物信息学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 生物信息学数据管理(四)">
+<meta property="og:url" content="http://yoursite.com/2017/07/30/Python-生物信息学数据管理（四）/index.html">
+<meta property="og:site_name" content="BioLiu">
+<meta property="og:description" content="今天，我们介绍Python语言中即列表之后，再一强大的工具————字典。通过学习使用字典储存数据和搜索数据，我们能完成更多数据处理任务，如：根据Gene ID及注释文件，从基因组文件中快速提取出相应的序列。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-30T09:40:06.716Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 生物信息学数据管理(四)">
+<meta name="twitter:description" content="今天，我们介绍Python语言中即列表之后，再一强大的工具————字典。通过学习使用字典储存数据和搜索数据，我们能完成更多数据处理任务，如：根据Gene ID及注释文件，从基因组文件中快速提取出相应的序列。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/30/Python-生物信息学数据管理（四）/"/>
+
+
+
+
+
+  <title>Python 生物信息学数据管理(四) | BioLiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BioLiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生信爱好者，小白进阶中</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/Python-生物信息学数据管理（四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liu Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BioLiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理(四)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T16:10:05+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/30/Python-生物信息学数据管理（四）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/07/30/Python-生物信息学数据管理（四）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天，我们介绍Python语言中即列表之后，再一强大的工具————<code>字典</code>。通过学习使用<code>字典</code>储存数据和搜索数据，我们能完成更多数据处理任务，如：根据<code>Gene ID</code>及<code>注释文件</code>，从<code>基因组</code>文件中快速提取出相应的序列。<br><a id="more"></a><br>首先，我们依旧通过一个案例，引入<code>字典</code></p>
+<h2 id="案例：将RNA序列翻译为相应的蛋白质序列"><a href="#案例：将RNA序列翻译为相应的蛋白质序列" class="headerlink" title="案例：将RNA序列翻译为相应的蛋白质序列"></a>案例：将RNA序列翻译为相应的蛋白质序列</h2><p>提示：</p>
+<ul>
+<li>一次读三个RNA序列</li>
+<li>终止或截短符（即<code>*</code>和<code>-</code>）</li>
+<li>字典——{密码子：氨基酸}</li>
+</ul>
+<p><code>RNA</code>序列如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt;A06662.1 Synthetic nucleotide sequence of the human GSH transferase pi gene</div><div class="line">UGGGACCAGUCAGCAGAGGCAGCGUGUGUGCGCGUGCGUGUGCGUGUGUGUGCGUGUGUGUGUG</div><div class="line">UACGCUUGCAUUUGUGUCGGGUGGGUAAGGAGAUAGAGAUGGGCGGGCAGUAGGCCCAGGUCCC</div><div class="line">GAAGGCCUUGAACCCACUGGUUUGGAGUCUCCUAAGGGCAAUGGGGGCCAUUGAGAAGUCUGAA</div><div class="line">CAGGGCUGUGUCUGAAUGUGAGGUCUAGAAGGAUCCUCCAGAGAAGCCAGCUCUAAAGCUUUUG</div><div class="line">CAAUCAUCUGGUGAGAGAACCCAGCAAGGAUGGACAGGCAGAAUGGAAUAGAGAUGAGUUGGCA</div><div class="line">GCUGAAGUGGACAGGAUUUGGUACUAGCCUGGUUGUGGGGAGCAAGCAGAGGAGAAUCUGGGAC</div><div class="line">UCUGGUGGUCUGGCCUGGGGCAGACGGGGGUGUCUCAGGGGCUGGGAGGGAUGAGAGUAGGAUG</div><div class="line">AUACAUGGUGGUGUCUGGCAGGAGGCGGGCAAGGAUGACUAUGUGAAGGCACUGCCCGGGCAAC</div><div class="line">UGAAGCCUUUUGAGACCCUGCUGUCCCAGAACCAGGGAGGCAAGACCUUCAUUGUGGGAGACCA</div><div class="line">GGUGAGCAUCUGGCC</div></pre></td></tr></table></figure></p>
+<p>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line"><span class="comment">#构建&#123;密码子：氨基酸&#125;字典</span></div><div class="line">codon_table = &#123;</div><div class="line">    <span class="string">'GCU'</span>:<span class="string">'A'</span>, <span class="string">'GCC'</span>:<span class="string">'A'</span>, <span class="string">'GCA'</span>:<span class="string">'A'</span>, <span class="string">'GCG'</span>:<span class="string">'A'</span>, <span class="string">'CGU'</span>:<span class="string">'R'</span>, <span class="string">'CGC'</span>:<span class="string">'R'</span>,   </div><div class="line">    <span class="string">'CGA'</span>:<span class="string">'R'</span>, <span class="string">'CGG'</span>:<span class="string">'R'</span>, <span class="string">'AGA'</span>:<span class="string">'R'</span>, <span class="string">'AGG'</span>:<span class="string">'R'</span>, <span class="string">'UCU'</span>:<span class="string">'S'</span>, <span class="string">'UCC'</span>:<span class="string">'S'</span>,</div><div class="line">    <span class="string">'UCA'</span>:<span class="string">'S'</span>, <span class="string">'UCG'</span>:<span class="string">'S'</span>, <span class="string">'AGU'</span>:<span class="string">'S'</span>, <span class="string">'AGC'</span>:<span class="string">'S'</span>, <span class="string">'AUU'</span>:<span class="string">'I'</span>, <span class="string">'AUC'</span>:<span class="string">'I'</span>,</div><div class="line">    <span class="string">'AUA'</span>:<span class="string">'I'</span>, <span class="string">'UUA'</span>:<span class="string">'L'</span>, <span class="string">'UUG'</span>:<span class="string">'L'</span>, <span class="string">'CUU'</span>:<span class="string">'L'</span>, <span class="string">'CUC'</span>:<span class="string">'L'</span>, <span class="string">'CUA'</span>:<span class="string">'L'</span>,</div><div class="line">    <span class="string">'CUG'</span>:<span class="string">'L'</span>, <span class="string">'GGU'</span>:<span class="string">'G'</span>, <span class="string">'GGC'</span>:<span class="string">'G'</span>, <span class="string">'GGA'</span>:<span class="string">'G'</span>, <span class="string">'GGG'</span>:<span class="string">'G'</span>, <span class="string">'GUU'</span>:<span class="string">'V'</span>,</div><div class="line">    <span class="string">'GUC'</span>:<span class="string">'V'</span>, <span class="string">'GUA'</span>:<span class="string">'V'</span>, <span class="string">'GUG'</span>:<span class="string">'V'</span>, <span class="string">'ACU'</span>:<span class="string">'T'</span>, <span class="string">'ACC'</span>:<span class="string">'T'</span>, <span class="string">'ACA'</span>:<span class="string">'T'</span>,</div><div class="line">    <span class="string">'ACG'</span>:<span class="string">'T'</span>, <span class="string">'CCU'</span>:<span class="string">'P'</span>, <span class="string">'CCC'</span>:<span class="string">'P'</span>, <span class="string">'CCA'</span>:<span class="string">'P'</span>, <span class="string">'CCG'</span>:<span class="string">'P'</span>, <span class="string">'AAU'</span>:<span class="string">'N'</span>,</div><div class="line">    <span class="string">'AAC'</span>:<span class="string">'N'</span>, <span class="string">'GAU'</span>:<span class="string">'D'</span>, <span class="string">'GAC'</span>:<span class="string">'D'</span>, <span class="string">'UGU'</span>:<span class="string">'C'</span>, <span class="string">'UGC'</span>:<span class="string">'C'</span>, <span class="string">'CAA'</span>:<span class="string">'Q'</span>,</div><div class="line">    <span class="string">'CAG'</span>:<span class="string">'Q'</span>, <span class="string">'GAA'</span>:<span class="string">'E'</span>, <span class="string">'GAG'</span>:<span class="string">'E'</span>, <span class="string">'CAU'</span>:<span class="string">'H'</span>, <span class="string">'CAC'</span>:<span class="string">'H'</span>, <span class="string">'AAA'</span>:<span class="string">'K'</span>,</div><div class="line">    <span class="string">'AAG'</span>:<span class="string">'K'</span>, <span class="string">'UUU'</span>:<span class="string">'F'</span>, <span class="string">'UUC'</span>:<span class="string">'F'</span>, <span class="string">'UAU'</span>:<span class="string">'Y'</span>, <span class="string">'UAC'</span>:<span class="string">'Y'</span>, <span class="string">'AUG'</span>:<span class="string">'M'</span>,</div><div class="line">    <span class="string">'UGG'</span>:<span class="string">'W'</span>,</div><div class="line">    <span class="string">'UAG'</span>:<span class="string">'STOP'</span>, <span class="string">'UGA'</span>:<span class="string">'STOP'</span>, <span class="string">'UAA'</span>:<span class="string">'STOP'</span></div><div class="line">    &#125;</div><div class="line"><span class="comment">#读取序列</span></div><div class="line">rna = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'A06662-RNA.fasta'</span>,<span class="string">'r'</span>):</div><div class="line">    <span class="keyword">if</span> line[<span class="number">0</span>] != <span class="string">'&gt;'</span>:</div><div class="line">        rna = rna + line.strip()</div><div class="line"><span class="comment">#翻译序列</span></div><div class="line"><span class="keyword">for</span> frame <span class="keyword">in</span> range(<span class="number">3</span>):</div><div class="line">    prot = <span class="string">''</span></div><div class="line">    print(<span class="string">'Reading frame'</span>+str(frame + <span class="number">1</span>))</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(frame,len(rna),<span class="number">3</span>):</div><div class="line">        codon = str(rna[i:i+<span class="number">3</span>])</div><div class="line">        <span class="keyword">if</span> codon <span class="keyword">in</span> codon_table:</div><div class="line">            <span class="keyword">if</span> codon_table[codon] == <span class="string">'STOP'</span>:</div><div class="line">                prot = prot + <span class="string">'*'</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                prot = prot + codon_table[codon]</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            prot = prot + <span class="string">'-'</span></div><div class="line"><span class="comment">#将序列以没行48个字符的形式进行格式化</span></div><div class="line">    i = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> i &lt; len(prot):</div><div class="line">        print(prot[i:i+<span class="number">48</span>])</div><div class="line">        i = i + <span class="number">48</span></div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Reading frame1</div><div class="line">WDQSAEAACVRVRVRVCACVCVRLHLCRVGKEIEMGGQ*AQVPKALNP</div><div class="line">LVWSLLRAMGAIEKSEQGCV*M*GLEGSSREASSKAFAIIW*ENPARM</div><div class="line">DRQNGIEMSWQLKWTGFGTSLVVGSKQRRIWDSGGLAWGRRGCLRGWE</div><div class="line">G*E*DDTWWCLAGGGQG*LCEGTARATEAF*DPAVPEPGRQDLHCGRP</div><div class="line">GEHLA</div><div class="line">Reading frame2</div><div class="line">GTSQQRQRVCACVCVCVRVCVYACICVGWVRR*RWAGSRPRSRRP*TH</div><div class="line">WFGVS*GQWGPLRSLNRAVSECEV*KDPPEKPALKLLQSSGERTQQGW</div><div class="line">TGRME*R*VGS*SGQDLVLAWLWGASRGESGTLVVWPGADGGVSGAGR</div><div class="line">DESRMIHGGVWQEAGKDDYVKALPGQLKPFETLLSQNQGGKTFIVGDQ</div><div class="line">VSIW-</div><div class="line">Reading frame3</div><div class="line">GPVSRGSVCARACACVCVCVCTLAFVSGG*GDRDGRAVGPGPEGLEPT</div><div class="line">GLESPKGNGGH*EV*TGLCLNVRSRRILQRSQL*SFCNHLVREPSKDG</div><div class="line">QAEWNRDELAAEVDRIWY*PGCGEQAEENLGLWWSGLGQTGVSQGLGG</div><div class="line">MRVG*YMVVSGRRRARMTM*RHCPGN*SLLRPCCPRTREARPSLWETR</div><div class="line">*ASG-</div></pre></td></tr></table></figure></p>
+<p><code>字典</code>定义</p>
+<ul>
+<li>键(key):值(value)对的对象的无序集合</li>
+<li>不可变对象<code>键</code>映射到任意对象<code>值</code>的结构</li>
+</ul>
+<h2 id="用while循环搜索"><a href="#用while循环搜索" class="headerlink" title="用while循环搜索"></a>用<code>while</code>循环搜索</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>东西写的不错，赏你个硬币，继续加油！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/wechat.jpg" alt="Liu Chen WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/08/alipay.jpg" alt="Liu Chen Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/生物信息学/" rel="tag"># 生物信息学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/Python-生物信息学数据管理（三）/" rel="next" title="Python 生物信息学数据管理（三）">
+                <i class="fa fa-chevron-left"></i> Python 生物信息学数据管理（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Liu Chen" />
+          <p class="site-author-name" itemprop="name">Liu Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Bioinformatiion、Python、R</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bioliu" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2214834675/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/liu-chen-59-34/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/53599f056741/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-jianshu"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：将RNA序列翻译为相应的蛋白质序列"><span class="nav-number">1.</span> <span class="nav-text">案例：将RNA序列翻译为相应的蛋白质序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用while循环搜索"><span class="nav-number">2.</span> <span class="nav-text">用while循环搜索</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bioliu.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/07/30/Python-生物信息学数据管理（四）/';
+          this.page.identifier = '2017/07/30/Python-生物信息学数据管理（四）/';
+          this.page.title = 'Python 生物信息学数据管理(四)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bioliu.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
