@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,生物信息学," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="今天，我们将学习过滤数据，在数据集中找到共同的、唯一的或冗余的项主要内容有：  合并数据集 寻找两个及以上数据集中的共同项 删除数据集中的重复 通过数据结构检测数据集的重复、交叉及差异部分 去除NGS原始数据的噪声">
+<meta name="keywords" content="Python,生物信息学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 生物信息学数据管理(六)">
+<meta property="og:url" content="http://yoursite.com/2017/08/01/Python-生物信息学数据管理（六）/index.html">
+<meta property="og:site_name" content="BioLiu">
+<meta property="og:description" content="今天，我们将学习过滤数据，在数据集中找到共同的、唯一的或冗余的项主要内容有：  合并数据集 寻找两个及以上数据集中的共同项 删除数据集中的重复 通过数据结构检测数据集的重复、交叉及差异部分 去除NGS原始数据的噪声">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-01T12:02:34.219Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 生物信息学数据管理(六)">
+<meta name="twitter:description" content="今天，我们将学习过滤数据，在数据集中找到共同的、唯一的或冗余的项主要内容有：  合并数据集 寻找两个及以上数据集中的共同项 删除数据集中的重复 通过数据结构检测数据集的重复、交叉及差异部分 去除NGS原始数据的噪声">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/01/Python-生物信息学数据管理（六）/"/>
+
+
+
+
+
+  <title>Python 生物信息学数据管理(六) | BioLiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BioLiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生信爱好者，小白进阶中</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/01/Python-生物信息学数据管理（六）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liu Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BioLiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理(六)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T10:10:02+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/01/Python-生物信息学数据管理（六）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/08/01/Python-生物信息学数据管理（六）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天，我们将学习过滤数据，在数据集中找到共同的、唯一的或冗余的项<br>主要内容有：</p>
+<ul>
+<li>合并数据集</li>
+<li>寻找两个及以上数据集中的共同项</li>
+<li>删除数据集中的重复</li>
+<li>通过数据结构检测数据集的重复、交叉及差异部分</li>
+<li>去除NGS原始数据的噪声<a id="more"></a>
+与往常一样，我们先看一下，今天使用数据的案例<h2 id="案例：使用RNA-seq输出数据"><a href="#案例：使用RNA-seq输出数据" class="headerlink" title="案例：使用RNA-seq输出数据"></a>案例：使用RNA-seq输出数据</h2>确切一点说，是使用NGS数据分析程序<code>Cuffcompare</code>的输出结果<code>transcripts.tracking文件</code>，<code>Cuffcompare</code>程序的输入文件来自<code>Cufflinks</code>装配的<code>.gtf</code>格式输出文件(包含转录本组合)。<br><code>transcripts.tracking文件</code>内容（仅展示前两行）如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Medullo-Diff_00000001	XLOC_000001	Lypla1|uc007afh.1	=	q1:NSC.P419.228|uc007afh.1|100|35.109496|34.188903|36.030089|397.404732|2433	q2:NSC.P429.18|uc007afh.1|100|15.885823|15.240240|16.531407|171.011325|2433	q3:NSC.P437.15|uc007afh.1|100|18.338541|17.704857|18.972224|181.643949|2433</div><div class="line">Medullo-Diff_00000002	XLOC_000002	Tcea1|uc007afi.2	=	q1:NSC.P419.228|uc007afi.2|18|1.653393|1.409591|1.897195|18.587029|2671	-	q3:NSC.P437.108|uc007afi.2|100|4.624079|4.258801|4.989356|45.379750|2671	-</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>表格中，每一行对应于一个单一的转录本，（制表符隔开的）每一列包含有关不同样本的信息。当转录本不存在于给定的样本中时，相应的列通过<code>-</code>填充，我们看一下样本<code>q1</code>的相关信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">样本标签：转录ID|基因ID|FMI(主要异构体比例)|FPKM(均值)|最小值|最大值|转录覆盖度|转录本长度|</div><div class="line">q1:NSC.P419.228|uc007afh.1|100|35.109496|34.188903|36.030089|397.404732|2433</div></pre></td></tr></table></figure></p>
+<p>接下来，我们将对<code>transcripts.tracking文件</code>进行筛选，只保留至少出现在三分之二（或任何比例）重复实验中的转录本。<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">outfile = open(<span class="string">'transcripts_filtered.tracking'</span>,<span class="string">'w'</span>)</div><div class="line">tracking = open(<span class="string">'transcripts.tracking'</span>,<span class="string">'r'</span>)</div><div class="line"><span class="keyword">for</span> track <span class="keyword">in</span> tracking:</div><div class="line">	<span class="comment">#本程序其中一个需要注意的地方，就是需要`strip()`方法，将每一行的`\n`去除，否则影响后续的匹配</span></div><div class="line">	columns = track.strip().split(<span class="string">'\t'</span>)</div><div class="line">	wildtype = columns[<span class="number">4</span>:<span class="number">7</span>].count(<span class="string">'-'</span>)</div><div class="line">	<span class="comment">#由于该文件中没有处理样本的数据，所以，暂时将处理样本筛选的脚本通过`#`注释掉</span></div><div class="line">	<span class="comment">#treatment = columns[7:10].count('-')</span></div><div class="line">	<span class="comment">#if wildtype &lt; 2 and treatment &lt; 2:</span></div><div class="line">	<span class="keyword">if</span> wildtype &lt; <span class="number">2</span>:</div><div class="line">		outfile.write(track+<span class="string">'\n'</span>)</div><div class="line">outfile.close()</div><div class="line">tracking.close()</div></pre></td></tr></table></figure></p>
+<h2 id="命令的含义"><a href="#命令的含义" class="headerlink" title="命令的含义"></a>命令的含义</h2><h3 id="用简单的for…if组合过滤"><a href="#用简单的for…if组合过滤" class="headerlink" title="用简单的for…if组合过滤"></a>用简单的for…if组合过滤</h3><p>上述代码中，通过<code>count</code>方法对<code>-</code>进行计数，而下边代码，则展示了计数的过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import os</div><div class="line">os.chdir(&quot;E:/python-excise/Biological_Python&quot;)</div><div class="line">output_file = open(&apos;transcripts-filtered.tracking&apos;, &apos;w&apos;)</div><div class="line"></div><div class="line">for track in open(&apos;transcripts.tracking&apos;):</div><div class="line">    columns = track.strip().split(&apos;\t&apos;)</div><div class="line">    wt = 0</div><div class="line">    t = 0</div><div class="line">    if columns[4] != &apos;-&apos;: wt += 1</div><div class="line">    if columns[5] != &apos;-&apos;: wt += 1</div><div class="line">    if columns[6] != &apos;-&apos;: wt += 1</div><div class="line">    if columns[7] != &apos;-&apos;: t += 1</div><div class="line">    if columns[8] != &apos;-&apos;: t += 1</div><div class="line">    if columns[9] != &apos;-&apos;: t += 1</div><div class="line">    if wt &gt; 1 or t &gt; 1:</div><div class="line">        output_file.write(track)</div><div class="line"></div><div class="line">output_file.close()</div></pre></td></tr></table></figure></p>
+<h3 id="合并两个数据集"><a href="#合并两个数据集" class="headerlink" title="合并两个数据集"></a>合并两个数据集</h3><p>这里，我们将两个数据集的共有部分写入一个新的文件<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data_a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">data_b = [<span class="number">1</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>]</div><div class="line">a_and_b = []</div><div class="line"><span class="keyword">for</span> num <span class="keyword">in</span> data_a:</div><div class="line">	<span class="keyword">if</span> num <span class="keyword">in</span> data_b:</div><div class="line">		a_and_b.append(num)</div><div class="line">print(a_and_b)</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[1, 5]</div></pre></td></tr></table></figure></p>
+<p>另外一种更加简便的方法，是使用数据集类型<code>intersection</code>方法（不考虑元素顺序）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">data_a = set([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</div><div class="line">data_b = set([<span class="number">1</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>])</div><div class="line">a_and_b = data_a.intersection(data_b)</div><div class="line">print(a_and_b)</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;1, 5&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="两组数据间的差异"><a href="#两组数据间的差异" class="headerlink" title="两组数据间的差异"></a>两组数据间的差异</h3><p>即找到那些元素在两个列表中有所不同<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">data_a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">data_b = [<span class="number">1</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>]</div><div class="line">a_not_b = []</div><div class="line">b_not_a = []</div><div class="line"><span class="keyword">for</span> num <span class="keyword">in</span> data_a:</div><div class="line">	<span class="keyword">if</span> num <span class="keyword">not</span> <span class="keyword">in</span> data_b:</div><div class="line">		a_not_b.append(num)</div><div class="line"><span class="keyword">for</span> num <span class="keyword">in</span> data_b:</div><div class="line">	<span class="keyword">if</span> num <span class="keyword">not</span> <span class="keyword">in</span> data_a:</div><div class="line">		b_not_a.append(num)</div><div class="line">print(a_not_b)</div><div class="line">print(b_not_a)</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[2, 3, 4, 6]</div><div class="line">[7, 9]</div></pre></td></tr></table></figure></p>
+<p>使用数据集类型<code>intersection</code>方法（不考虑元素顺序）<br>``Python<br>data_a = set([1,2,3,4,5,6])<br>data_b = set([1,5,7,9])<br>a_not_b = data_a.difference(data_b)<br>b_not_a = data_b.difference(data_a)<br>print(a_not_b)<br>print(b_not_a)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">输出结果如下：</div></pre></td></tr></table></figure></p>
+<p>{2, 3, 4, 6}<br>{9, 7}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">### 从`列表`、`字典`和`文件`中删除元素</div><div class="line">#### 从列表中删除元素</div><div class="line">`pop()`方法，可以在删除之前，返回被删除的值，可以通过`索引`进行定位删除</div><div class="line">```Python</div><div class="line">&gt;&gt;&gt; data_a = [1,2,3,4,5,6]</div><div class="line">&gt;&gt;&gt; data_a.pop(2)</div><div class="line">3</div><div class="line">&gt;&gt;&gt; data_a</div><div class="line">[1, 2, 4, 5, 6]</div></pre></td></tr></table></figure></p>
+<p>内置函数<code>del()</code>，不返回被删除的值，同样可以通过<code>索引</code>进行定位删除<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>data_a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span>(data_a[<span class="number">2</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data_a</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</div></pre></td></tr></table></figure></p>
+<p><code>remove</code>方法，可以实现对特定的<code>值</code>进行删除<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>data_a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data_a.remove(<span class="number">3</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data_a</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</div></pre></td></tr></table></figure></p>
+<p><strong>注意</strong>：<code>remove</code>只能删除第一次出现的<code>3</code>。全部删除，可以使用<code>列表推导式</code>的策略<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">data_a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>]</div><div class="line">data_a = [x <span class="keyword">for</span> x <span class="keyword">in</span> data_a <span class="keyword">if</span> x!= <span class="number">3</span>]</div><div class="line">print(data_a)</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[1, 2, 4, 5, 6]</div></pre></td></tr></table></figure></p>
+<p>另外，也可以采用<code>切片</code>的形式，切除列表一个或多个位置的值：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>data_a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data = data_a[:<span class="number">2</span>] + data_a[<span class="number">3</span>:]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</div></pre></td></tr></table></figure></p>
+<h4 id="从字典中删除元素"><a href="#从字典中删除元素" class="headerlink" title="从字典中删除元素"></a>从字典中删除元素</h4><p><code>pop()</code>方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>d = &#123;<span class="string">'a'</span>:<span class="number">1</span>,<span class="string">'b'</span>:<span class="number">2</span>,<span class="string">'c'</span>:<span class="number">3</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d.pop(<span class="string">'a'</span>)</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d</div><div class="line">&#123;<span class="string">'b'</span>: <span class="number">2</span>, <span class="string">'c'</span>: <span class="number">3</span>&#125;</div></pre></td></tr></table></figure></p>
+<p>内置函数<code>del()</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>d = &#123;<span class="string">'a'</span>:<span class="number">1</span>,<span class="string">'b'</span>:<span class="number">2</span>,<span class="string">'c'</span>:<span class="number">3</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span>(d[<span class="string">'a'</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d</div><div class="line">&#123;<span class="string">'b'</span>: <span class="number">2</span>, <span class="string">'c'</span>: <span class="number">3</span>&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="删除文本中的特定行"><a href="#删除文本中的特定行" class="headerlink" title="删除文本中的特定行"></a>删除文本中的特定行</h4><p>输入<code>text.txt</code>文件，删除其第一行、第二行、第五行及第六行，可以通过<code>列表切片</code>的方式<br><code>text.txt</code>文件格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">line1</div><div class="line">line2</div><div class="line">line3</div><div class="line">line4</div><div class="line">line5</div><div class="line">line6</div><div class="line">line7</div><div class="line">line8</div><div class="line">line9</div><div class="line">line10</div></pre></td></tr></table></figure></p>
+<p>思路：<br>*　设置要删除的行，放进一个列表中，本题为[１，２，５，６]<br>×　设置一个索引<code>index</code>，用于记录目前位于第几行<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">in_file = open(<span class="string">'text.txt'</span>,<span class="string">'r'</span>)</div><div class="line">out_file = open(<span class="string">'text_del'</span>,<span class="string">'w'</span>)</div><div class="line">index = <span class="number">0</span></div><div class="line">indices_to_remove = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> in_file:</div><div class="line">	index += <span class="number">1</span></div><div class="line">	<span class="keyword">if</span> index <span class="keyword">not</span> <span class="keyword">in</span> indices_to_remove:</div><div class="line">		out_file.write(line)</div><div class="line">out_file.close()</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">line3</div><div class="line">line4</div><div class="line">line7</div><div class="line">line8</div><div class="line">line9</div><div class="line">line10</div></pre></td></tr></table></figure></p>
+<p>此外，也可以不设置索引<code>index</code>，而使用内置函数<code>enumerate()</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">out_file = open(<span class="string">'text_del'</span>,<span class="string">'w'</span>)</div><div class="line">indices_to_remove = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line"><span class="keyword">for</span> index,line <span class="keyword">in</span> enumerate(open(<span class="string">'text.txt'</span>)):</div><div class="line">	<span class="keyword">if</span> (index+<span class="number">1</span>) <span class="keyword">not</span> <span class="keyword">in</span> indices_to_remove:</div><div class="line">		out_file.write(line)</div><div class="line">out_file.close()</div></pre></td></tr></table></figure></p>
+<p>对于给定的列表x，<code>enumerate()</code>函数返回索引i和x[i]值的<code>元组</code>(i,x[i])<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i,j <span class="keyword">in</span> enumerate(x):</div><div class="line">	print(i,j)</div><div class="line"></div><div class="line"><span class="number">0</span> <span class="number">1</span></div><div class="line"><span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="number">2</span> <span class="number">3</span></div><div class="line"><span class="number">3</span> <span class="number">4</span></div><div class="line"><span class="number">4</span> <span class="number">5</span></div><div class="line"><span class="number">5</span> <span class="number">6</span></div></pre></td></tr></table></figure></p>
+<h3 id="保持或者不保持顺序的删除重复"><a href="#保持或者不保持顺序的删除重复" class="headerlink" title="保持或者不保持顺序的删除重复"></a>保持或者不保持顺序的删除重复</h3><h4 id="从文本中保留顺序地选择性删除重复记录"><a href="#从文本中保留顺序地选择性删除重复记录" class="headerlink" title="从文本中保留顺序地选择性删除重复记录"></a>从文本中保留顺序地选择性删除重复记录</h4><p>去除文本文件文件重复行，并创建一个只包含唯一元素的新文件。<br>先看一下输入文件内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">P04637</div><div class="line">P02340	</div><div class="line">P10361</div><div class="line">Q29537</div><div class="line">P04637</div><div class="line">P10361</div><div class="line">P10361</div><div class="line">P02340</div></pre></td></tr></table></figure></p>
+<p>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">input_file = open(<span class="string">'UniprotID.txt'</span>,<span class="string">'r'</span>)</div><div class="line">output_file = open(<span class="string">'UniprotID_unique.txt'</span>,<span class="string">'w'</span>)</div><div class="line">unique = []</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> input_file:</div><div class="line">	<span class="keyword">if</span> line <span class="keyword">not</span> <span class="keyword">in</span> unique:</div><div class="line">		output_file.write(line)</div><div class="line">		unique.append(line)</div><div class="line">input_file.close()</div><div class="line">output_file.close()</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">P04637</div><div class="line">P02340	</div><div class="line">P10361</div><div class="line">Q29537</div><div class="line">P02340</div></pre></td></tr></table></figure></p>
+<h4 id="从文本中不保留顺序地选择性删除重复记录"><a href="#从文本中不保留顺序地选择性删除重复记录" class="headerlink" title="从文本中不保留顺序地选择性删除重复记录"></a>从文本中不保留顺序地选择性删除重复记录</h4><p>将数据读取为一个集合<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">input_file = open(<span class="string">'UniprotID.txt'</span>,<span class="string">'r'</span>)</div><div class="line">output_file = open(<span class="string">'UniprotID_unique.txt'</span>,<span class="string">'w'</span>)</div><div class="line">unique = set(input_file)</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> unique:</div><div class="line">	output_file.write(line)</div><div class="line">input_file.close()</div><div class="line">output_file.close()</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">P02340	</div><div class="line">P04637</div><div class="line">Q29537</div><div class="line">P02340	</div><div class="line">P10361</div></pre></td></tr></table></figure></p>
+<h4 id="如何删除有90-以上一致性的序列"><a href="#如何删除有90-以上一致性的序列" class="headerlink" title="如何删除有90%以上一致性的序列"></a>如何删除有90%以上一致性的序列</h4><p>序列去冗余<br><a href="http://bioinformatics.org/cd-hit/" target="_blank" rel="external">CD-HIT</a>(可容错的高同源性聚类数据库)</p>
+<ul>
+<li>用户自定义相似性<code>阈值</code></li>
+<li>输入一组<code>FASTA</code>格式的文件</li>
+</ul>
+<p>返回两个文件：</p>
+<ul>
+<li>聚类列表</li>
+<li>所聚各类代表序列</li>
+</ul>
+<p>实现代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span>-hit -i redundant_set -o nr-90 -c 0.9 -n 5</div></pre></td></tr></table></figure></p>
+<p><code>redundant_set</code>为输入文件名，<code>nr-90</code>是输出，<code>0.9</code>代表90%的同源性</p>
+<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><p>在上述的很多例子中，已经见到了集合的强大功能，接下来，我们将对其其他功能进行介绍<br>集合的<code>定义</code>：<strong>唯一</strong>对象的无序组合<br>集合是<code>删除重复</code>、<code>计算交集</code>、<code>并集</code>以及<code>两个或以上对象组之间差异</code>的理想数据结构。集合支持<code>in</code>和<code>not in</code>逻辑计算</p>
+<h4 id="创建集合"><a href="#创建集合" class="headerlink" title="创建集合"></a>创建集合</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>set(<span class="string">'MGSNKSKPKDQSQ'</span>)</div><div class="line">&#123;<span class="string">'N'</span>, <span class="string">'S'</span>, <span class="string">'D'</span>, <span class="string">'G'</span>, <span class="string">'K'</span>, <span class="string">'M'</span>, <span class="string">'Q'</span>, <span class="string">'P'</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>set((<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</div><div class="line">&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>set([<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</div><div class="line">&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="string">'c'</span>&#125;</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<p>集合中的元素为不可变对象，因此列表、字典或者其他集合不能作为集合的元素</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>东西写的不错，赏你个硬币，继续加油！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/wechat.jpg" alt="Liu Chen WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/08/alipay.jpg" alt="Liu Chen Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/生物信息学/" rel="tag"># 生物信息学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/31/Python-生物信息学数据管理（五）/" rel="next" title="Python 生物信息学数据管理(五)">
+                <i class="fa fa-chevron-left"></i> Python 生物信息学数据管理(五)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Liu Chen" />
+          <p class="site-author-name" itemprop="name">Liu Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Bioinformatiion、Python、R</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bioliu" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2214834675/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/liu-chen-59-34/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/53599f056741/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-jianshu"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：使用RNA-seq输出数据"><span class="nav-number">1.</span> <span class="nav-text">案例：使用RNA-seq输出数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令的含义"><span class="nav-number">2.</span> <span class="nav-text">命令的含义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用简单的for…if组合过滤"><span class="nav-number">2.1.</span> <span class="nav-text">用简单的for…if组合过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并两个数据集"><span class="nav-number">2.2.</span> <span class="nav-text">合并两个数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两组数据间的差异"><span class="nav-number">2.3.</span> <span class="nav-text">两组数据间的差异</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从字典中删除元素"><span class="nav-number">2.3.1.</span> <span class="nav-text">从字典中删除元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除文本中的特定行"><span class="nav-number">2.3.2.</span> <span class="nav-text">删除文本中的特定行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持或者不保持顺序的删除重复"><span class="nav-number">2.4.</span> <span class="nav-text">保持或者不保持顺序的删除重复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从文本中保留顺序地选择性删除重复记录"><span class="nav-number">2.4.1.</span> <span class="nav-text">从文本中保留顺序地选择性删除重复记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从文本中不保留顺序地选择性删除重复记录"><span class="nav-number">2.4.2.</span> <span class="nav-text">从文本中不保留顺序地选择性删除重复记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何删除有90-以上一致性的序列"><span class="nav-number">2.4.3.</span> <span class="nav-text">如何删除有90%以上一致性的序列</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合"><span class="nav-number">2.5.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建集合"><span class="nav-number">2.5.1.</span> <span class="nav-text">创建集合</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bioliu.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/08/01/Python-生物信息学数据管理（六）/';
+          this.page.identifier = '2017/08/01/Python-生物信息学数据管理（六）/';
+          this.page.title = 'Python 生物信息学数据管理(六)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bioliu.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
