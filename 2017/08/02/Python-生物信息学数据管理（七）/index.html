@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="R语言,ggplot," />
+  <meta name="keywords" content="Python,生物信息学," />
 
 
 
@@ -93,20 +93,18 @@
 
 
 
-<meta name="description" content="这次，我们简单介绍一下ggplot2包，它几乎可以满足你对图形的所有要求。">
-<meta name="keywords" content="R语言,ggplot">
+<meta name="description" content="上一期，介绍了过滤数据相关的内容，本期我们做一些相关的练习，巩固上一期所学的内容。">
+<meta name="keywords" content="Python,生物信息学">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ggplot2常规作图一">
-<meta property="og:url" content="http://yoursite.com/2017/07/27/ggplot2常规作图一/index.html">
+<meta property="og:title" content="Python 生物信息学数据管理(七)">
+<meta property="og:url" content="http://yoursite.com/2017/08/02/Python-生物信息学数据管理（七）/index.html">
 <meta property="og:site_name" content="BioLiu">
-<meta property="og:description" content="这次，我们简单介绍一下ggplot2包，它几乎可以满足你对图形的所有要求。">
+<meta property="og:description" content="上一期，介绍了过滤数据相关的内容，本期我们做一些相关的练习，巩固上一期所学的内容。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//ggplot/ggplot2.jpg">
-<meta property="og:updated_time" content="2017-07-30T08:07:22.068Z">
+<meta property="og:updated_time" content="2017-08-02T15:08:52.288Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ggplot2常规作图一">
-<meta name="twitter:description" content="这次，我们简单介绍一下ggplot2包，它几乎可以满足你对图形的所有要求。">
-<meta name="twitter:image" content="http://osrxne9le.bkt.clouddn.com//ggplot/ggplot2.jpg">
+<meta name="twitter:title" content="Python 生物信息学数据管理(七)">
+<meta name="twitter:description" content="上一期，介绍了过滤数据相关的内容，本期我们做一些相关的练习，巩固上一期所学的内容。">
 
 
 
@@ -134,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/27/ggplot2常规作图一/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/02/Python-生物信息学数据管理（七）/"/>
 
 
 
 
 
-  <title>ggplot2常规作图一 | BioLiu</title>
+  <title>Python 生物信息学数据管理(七) | BioLiu</title>
   
 
 
@@ -279,7 +277,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/ggplot2常规作图一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/02/Python-生物信息学数据管理（七）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liu Chen">
@@ -296,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ggplot2常规作图一</h1>
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理(七)</h1>
         
 
         <div class="post-meta">
@@ -308,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T15:46:20+08:00">
-                2017-07-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-02T10:04:29+08:00">
+                2017-08-02
               </time>
             
 
@@ -327,9 +325,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/07/27/ggplot2常规作图一/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/02/Python-生物信息学数据管理（七）/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/07/27/ggplot2常规作图一/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/02/Python-生物信息学数据管理（七）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,10 +352,21 @@
       
 
       
-        <p>这次，我们简单介绍一下ggplot2包，它几乎可以满足你对图形的所有要求。<br><img src="http://osrxne9le.bkt.clouddn.com//ggplot/ggplot2.jpg" alt="ggplot"><br><a id="more"></a></p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(ggplot2)</div><div class="line"><span class="comment">#散点图</span></div><div class="line">ggplot(mtcars,aes(mpg,wt))+geom_point()</div><div class="line"></div><div class="line"><span class="comment">#柱状图，通过`factor(cyl)`将数据分类，通过`fill=factor(am)`根据`am`类别进行填充</span></div><div class="line">ggplot(mtcars,aes(factor(cyl),fill=factor(am)))+geom_bar()</div><div class="line"><span class="comment">#将数据并排展示</span></div><div class="line">ggplot(mtcars,aes(factor(cyl),fill=factor(am)))+geom_bar(position = <span class="string">"dodge"</span>)</div><div class="line"><span class="comment">#按照`百分比`进行堆积</span></div><div class="line">ggplot(mtcars,aes(factor(cyl),fill=factor(am)))+geom_bar(position = <span class="string">"fill"</span>)</div><div class="line"><span class="comment">#直方图</span></div><div class="line">ggplot(mtcars,aes(mpg))+geom_histogram()</div><div class="line"><span class="comment">#密度图，`color`对点、线及图形边缘进行着色；</span></div><div class="line">ggplot(mtcars,aes(mpg,color=factor(vs)))+geom_density()</div><div class="line"></div><div class="line"><span class="comment">#`fill`则是对图形内部进行填充，修改`alpha`可以对图形透明度进行修改，有效改善图形之间的遮挡</span></div><div class="line">ggplot(mtcars,aes(mpg,fill=factor(vs)))+geom_density(alpha=<span class="number">0.6</span>)</div><div class="line"></div><div class="line"><span class="comment">#箱线图，查看变量统计值分布情况`aes`中，第一个为分组变量，第二个为要统计分布的变量</span></div><div class="line">ggplot(mtcars,aes(factor(cyl),mpg))+geom_boxplot()</div></pre></td></tr></table></figure>
-<h2 id="分面作图"><a href="#分面作图" class="headerlink" title="分面作图"></a>分面作图</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#按照y轴进行拆分</span></div><div class="line">ggplot(mtcars,aes(wt,mpg))+geom_point()+facet_grid(vs~.)</div><div class="line"><span class="comment">#按照x轴进行拆分</span></div><div class="line">ggplot(mtcars,aes(wt,mpg))+geom_point()+facet_grid(.~vs)</div><div class="line"><span class="comment">#双变量作图</span></div><div class="line">ggplot(mtcars,aes(wt,mpg))+geom_point()+facet_grid(am~vs)</div><div class="line"><span class="comment">#不同纵轴刻度</span></div><div class="line">ggplot(mtcars,aes(wt,mpg))+geom_point()+facet_grid(vs~.,scale=<span class="string">"free_y"</span>)</div><div class="line"><span class="comment">#不同横坐标轴</span></div><div class="line">ggplot(mtcars,aes(wt,mpg))+geom_point()+facet_grid(.~vs,scale=<span class="string">"free_x"</span>)</div></pre></td></tr></table></figure>
-<h2 id="调整"><a href="#调整" class="headerlink" title="调整"></a>调整</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)</div><div class="line"></div><div class="line"><span class="comment">#添加文本注释`annotate()`</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+   annotate(<span class="string">"text"</span>,x=<span class="number">2</span>,y=<span class="number">27.5</span>,label=<span class="string">"yes"</span>)</div><div class="line"></div><div class="line"><span class="comment">#添加标题`labs()`</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+ labs(title=<span class="string">"Title"</span>,x=<span class="string">"x label"</span>,y=<span class="string">"y label"</span>)</div><div class="line"></div><div class="line"><span class="comment">#添加线条</span></div><div class="line"><span class="comment">##添加竖线`geom_vline()`</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+ geom_vline(xintercept = <span class="number">3</span>)</div><div class="line"></div><div class="line"><span class="comment">##添加横线`geom_hline()`</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+ geom_hline(yintercept = <span class="number">20</span>)</div><div class="line"></div><div class="line"><span class="comment">#转换x和y轴</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+coord_flip()</div><div class="line"></div><div class="line"><span class="comment">#使用`xlim()`调整x坐标轴的上下限</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+   xlim(<span class="number">3</span>,<span class="number">4</span>)</div><div class="line"></div><div class="line"><span class="comment">#使用`ylim()`调整y坐标轴的上下限</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+   ylim(<span class="number">15</span>,<span class="number">30</span>)</div><div class="line"></div><div class="line"><span class="comment">#修改坐标轴上的值</span></div><div class="line"></div><div class="line"><span class="comment">##修改x轴`scale_x_continuous()`</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+  scale_x_continuous(breaks = c(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>),labels=c(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>))</div><div class="line"></div><div class="line"><span class="comment">##修改y轴`scale_y_continuous()`</span></div><div class="line">&gt; ggplot(mtcars,aes(wt,mpg,color=factor(vs)))+geom_point(shape=<span class="number">2</span>,size=<span class="number">3</span>)+</div><div class="line">+  scale_y_continuous(breaks = c(<span class="number">10</span>,<span class="number">15</span>,<span class="number">20</span>,<span class="number">25</span>),labels=c(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>))</div></pre></td></tr></table></figure>
+        <p>上一期，介绍了过滤数据相关的内容，本期我们做一些相关的练习，巩固上一期所学的内容。<br><a id="more"></a></p>
+<h2 id="复制所选FASTA的记录到文件"><a href="#复制所选FASTA的记录到文件" class="headerlink" title="复制所选FASTA的记录到文件"></a>复制所选FASTA的记录到文件</h2><p>读取多序列FASTA文件，将以甲硫氨酸(M)开始的序列的ID(每行一个)复制到一个新的文件<br>提示：</p>
+<ul>
+<li>只需要检查第一个字符即可</li>
+</ul>
+<p>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">Input_file = open(<span class="string">'SwissProt.fasta'</span>,<span class="string">'r'</span>)</div><div class="line">Output_file = open(<span class="string">'SwissProt_startswith_M.fasta'</span>,<span class="string">'w'</span>)</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> Input_file:</div><div class="line">    <span class="keyword">if</span> line.startswith(<span class="string">'&gt;'</span>):</div><div class="line">        header = line</div><div class="line">        index = <span class="number">1</span></div><div class="line">    <span class="keyword">elif</span> line.startswith(<span class="string">'M'</span>) <span class="keyword">and</span> index == <span class="number">1</span>:</div><div class="line">        Output_file.write(header)</div><div class="line">        header = line</div><div class="line">        index = <span class="number">0</span></div><div class="line">Input_file.close()</div><div class="line">Output_file.close()</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;sp|P31946|1433B_HUMAN 14-3-3 protein beta/alpha OS=Homo sapiens GN=YWHAB PE=1 SV=3</div><div class="line">&gt;sp|P62258|1433E_HUMAN 14-3-3 protein epsilon OS=Homo sapiens GN=YWHAE PE=1 SV=1</div><div class="line">&gt;sp|Q04917|1433F_HUMAN 14-3-3 protein eta OS=Homo sapiens GN=YWHAH PE=1 SV=4</div><div class="line">&gt;sp|P61981|1433G_HUMAN 14-3-3 protein gamma OS=Homo sapiens GN=YWHAG PE=1 SV=2</div><div class="line">&gt;sp|P31947|1433S_HUMAN 14-3-3 protein sigma OS=Homo sapiens GN=SFN PE=1 SV=1</div><div class="line">&gt;sp|P27348|1433T_HUMAN 14-3-3 protein theta OS=Homo sapiens GN=YWHAQ PE=1 SV=1</div><div class="line">&gt;sp|P63104|1433Z_HUMAN 14-3-3 protein zeta/delta OS=Homo sapiens GN=YWHAZ PE=1 SV=1</div><div class="line">&gt;sp|P30443|1A01_HUMAN HLA class I histocompatibility antigen, A-1 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=1</div></pre></td></tr></table></figure></p>
+<h2 id="从选择的文本中删除偶数-或奇数-行，这里，我们删除奇数行"><a href="#从选择的文本中删除偶数-或奇数-行，这里，我们删除奇数行" class="headerlink" title="从选择的文本中删除偶数(或奇数)行，这里，我们删除奇数行"></a>从选择的文本中删除偶数(或奇数)行，这里，我们删除奇数行</h2><p>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"E:/python-excise/Biological_Python"</span>)</div><div class="line">Input_file = open(<span class="string">'SwissProt_startswith_M.fasta'</span>,<span class="string">'r'</span>)</div><div class="line">index = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> Input_file:</div><div class="line">    index += <span class="number">1</span></div><div class="line">    <span class="keyword">if</span> (index % <span class="number">2</span>) == <span class="number">0</span>:</div><div class="line">        print(line.strip())</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br>`&gt;sp|P62258|1433E_HUMAN 14-3-3 protein epsilon OS=Homo sapiens GN=YWHAE PE=1 SV=1</p>
+<blockquote>
+<p>sp|P61981|1433G_HUMAN 14-3-3 protein gamma OS=Homo sapiens GN=YWHAG PE=1 SV=2<br>sp|P27348|1433T_HUMAN 14-3-3 protein theta OS=Homo sapiens GN=YWHAQ PE=1 SV=1<br>sp|P30443|1A01_HUMAN HLA class I histocompatibility antigen, A-1 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">## 在具有相同行数的文件之间寻找差异</div><div class="line">读取两个文本文件，并逐行打印之间的差异</div><div class="line">提示：</div><div class="line">* `readlines()`把文件的每一行添加至列表</div><div class="line">我们依旧以上一期的old及new两个文件为例。为了保证行数相同，我们稍作修改，内容如下</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>#old<br>a<br>b<br>c<br>d<br>e<br>f<br>g<br>h<br>i<br>l</p>
+<p>#new_edited<br>a<br>b<br>c<br>s<br>m<br>g<br>g<br>m<br>i<br>l<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">实现代码如下：</div><div class="line">```Python</div><div class="line">import os</div><div class="line">os.chdir(&quot;E:/python-excise/Biological_Python&quot;)</div><div class="line">old = open(&apos;list_old.txt&apos;,&apos;r&apos;)</div><div class="line">new = open(&apos;list_new_edited.txt&apos;,&apos;r&apos;)</div><div class="line">fls1 = old.readlines()</div><div class="line">fls2 = new.readlines()</div><div class="line">print(&quot;We are just in old&quot;)</div><div class="line">for line in fls1:</div><div class="line">    if line not in fls2:</div><div class="line">        print(line.strip())</div><div class="line">print(&quot;We are just in new&quot;)</div><div class="line">for line in fls2:</div><div class="line">    if line not in fls1:</div><div class="line">        print(line.strip())</div><div class="line">old.close()</div><div class="line">new.close()</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">We are just in old</div><div class="line">d</div><div class="line">e</div><div class="line">f</div><div class="line">h</div><div class="line">We are just in new</div><div class="line">s</div><div class="line">m</div><div class="line">m</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -408,9 +417,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/R语言/" rel="tag"># R语言</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
-            <a href="/tags/ggplot/" rel="tag"># ggplot</a>
+            <a href="/tags/生物信息学/" rel="tag"># 生物信息学</a>
           
         </div>
       
@@ -423,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/14/基因组分析中统计学原理（四）/" rel="next" title="基因组分析中统计学原理（四）">
-                <i class="fa fa-chevron-left"></i> 基因组分析中统计学原理（四）
+              <a href="/2017/08/01/Python-生物信息学数据管理（六）/" rel="next" title="Python 生物信息学数据管理(六)">
+                <i class="fa fa-chevron-left"></i> Python 生物信息学数据管理(六)
               </a>
             
           </div>
@@ -432,10 +441,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/27/Python-生物信息学数据管理（一）/" rel="prev" title="Python 生物信息学数据管理(一)">
-                Python 生物信息学数据管理(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -600,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分面作图"><span class="nav-number">1.</span> <span class="nav-text">分面作图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调整"><span class="nav-number">2.</span> <span class="nav-text">调整</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#复制所选FASTA的记录到文件"><span class="nav-number">1.</span> <span class="nav-text">复制所选FASTA的记录到文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从选择的文本中删除偶数-或奇数-行，这里，我们删除奇数行"><span class="nav-number">2.</span> <span class="nav-text">从选择的文本中删除偶数(或奇数)行，这里，我们删除奇数行</span></a></li></ol></div>
             
 
           </div>
@@ -743,9 +748,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/07/27/ggplot2常规作图一/';
-          this.page.identifier = '2017/07/27/ggplot2常规作图一/';
-          this.page.title = 'ggplot2常规作图一';
+          this.page.url = 'http://yoursite.com/2017/08/02/Python-生物信息学数据管理（七）/';
+          this.page.identifier = '2017/08/02/Python-生物信息学数据管理（七）/';
+          this.page.title = 'Python 生物信息学数据管理(七)';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://bioliu.disqus.com/embed.js';
