@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="R语言,统计学," />
+  <meta name="keywords" content="Python,生物信息学," />
 
 
 
@@ -93,33 +93,18 @@
 
 
 
-<meta name="description" content="分析固然重要，但是初期的实验设计，对我们后续结果的分析具有至关重要的作用。实验设计中，包括三方面内容：差异、重复性及发现真正存在信号的可能性。今天，我们主要介绍实验设计过程中的一些基本概念，以及实验结果中差异的构成，并对此进行一些探讨。">
-<meta name="keywords" content="R语言,统计学">
+<meta name="description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
+<meta name="keywords" content="Python,生物信息学">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基因组分析中统计学原理（三）">
-<meta property="og:url" content="http://yoursite.com/2017/07/14/基因组分析中统计学原理（三）/index.html">
+<meta property="og:title" content="Python 生物信息学数据管理（九）">
+<meta property="og:url" content="http://yoursite.com/2017/08/04/Python-生物信息学数据管理（九）/index.html">
 <meta property="og:site_name" content="BioLiu">
-<meta property="og:description" content="分析固然重要，但是初期的实验设计，对我们后续结果的分析具有至关重要的作用。实验设计中，包括三方面内容：差异、重复性及发现真正存在信号的可能性。今天，我们主要介绍实验设计过程中的一些基本概念，以及实验结果中差异的构成，并对此进行一些探讨。">
+<meta property="og:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/var.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/repeats.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/power.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/power_calculated1.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/replicate-calculated1.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/replicate-calculated2.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/Confounder.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/experimental%20design.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/experimental%20design%20rules.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com/bar%20map.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/primary.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/MA%20plot.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/centered%20map.png">
-<meta property="og:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/further.png">
-<meta property="og:updated_time" content="2017-07-30T08:06:58.627Z">
+<meta property="og:updated_time" content="2017-08-04T15:25:16.773Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基因组分析中统计学原理（三）">
-<meta name="twitter:description" content="分析固然重要，但是初期的实验设计，对我们后续结果的分析具有至关重要的作用。实验设计中，包括三方面内容：差异、重复性及发现真正存在信号的可能性。今天，我们主要介绍实验设计过程中的一些基本概念，以及实验结果中差异的构成，并对此进行一些探讨。">
-<meta name="twitter:image" content="http://osrxne9le.bkt.clouddn.com//genome_statics/var.png">
+<meta name="twitter:title" content="Python 生物信息学数据管理（九）">
+<meta name="twitter:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
 
 
 
@@ -147,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/14/基因组分析中统计学原理（三）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/04/Python-生物信息学数据管理（九）/"/>
 
 
 
 
 
-  <title>基因组分析中统计学原理（三） | BioLiu</title>
+  <title>Python 生物信息学数据管理（九） | BioLiu</title>
   
 
 
@@ -292,7 +277,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/基因组分析中统计学原理（三）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/04/Python-生物信息学数据管理（九）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liu Chen">
@@ -309,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">基因组分析中统计学原理（三）</h1>
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理（九）</h1>
         
 
         <div class="post-meta">
@@ -321,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T15:58:28+08:00">
-                2017-07-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-04T16:19:28+08:00">
+                2017-08-04
               </time>
             
 
@@ -340,9 +325,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/07/14/基因组分析中统计学原理（三）/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/04/Python-生物信息学数据管理（九）/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/07/14/基因组分析中统计学原理（三）/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/04/Python-生物信息学数据管理（九）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -367,69 +352,10 @@
       
 
       
-        <p>分析固然重要，但是初期的实验设计，对我们后续结果的分析具有至关重要的作用。实验设计中，包括三方面内容：差异、重复性及发现真正存在信号的可能性。今天，我们主要介绍实验设计过程中的一些基本概念，以及实验结果中差异的构成，并对此进行一些探讨。<br><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/var.png" alt="差异产生的原因"><br><a id="more"></a></p>
-<h4 id="首先，我们需要明白生物学重复与技术重复之间的区别"><a href="#首先，我们需要明白生物学重复与技术重复之间的区别" class="headerlink" title="首先，我们需要明白生物学重复与技术重复之间的区别"></a>首先，我们需要明白生物学重复与技术重复之间的区别</h4><p><img src="http://osrxne9le.bkt.clouddn.com/repeats.png" alt="生物学重复与技术重复之间的比较"></p>
-<p>一般情况下，基因组分析中不同<code>技术重复</code>对结果影响较小</p>
-<p>若对该方面感兴趣，也可以参照<a href="http://bioinformatics.bc.edu/marthlab/scotty/help.html" target="_blank" rel="external">资料</a></p>
-<h4 id="接下来，我们讨论一下对于测序样本多少的问题"><a href="#接下来，我们讨论一下对于测序样本多少的问题" class="headerlink" title="接下来，我们讨论一下对于测序样本多少的问题"></a>接下来，我们讨论一下对于测序样本多少的问题</h4><p>2011年，<a href="http://www.nature.com/nbt/journal/v29/n7/full/nbt.1910.html" target="_blank" rel="external">Nature发表文章</a>称，对于<code>RNA-Seq</code>数据来说，至少10个样本才能用于测定生物学差异。</p>
-<p>当然，通常情况下，我们的科研经费有限，我们需要权衡测序深度与测序样本数量的选择，对此也有专门<a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-13-484" target="_blank" rel="external">文章</a>进行比较。生物学重复的提高，可以有效的提高真阳性率，降低假阳性率。也就是说，提高生物学重复数，可以增加对差异基因检测敏感度，使得那些差异倍数较小或表大量较低的差异基因（此类基因通常检测难度较大）能够更加容易被检测到。目前，三次生物学重复，每个样本测序量都会在2G以上，足以满足对差异基因的筛选。当我们进行转录本拼接，低丰度转录本的de novo拼接，则可以采取将几个生物学重复样本合并的测量。</p>
-<p>对于<code>lncRNA</code>测序，不设生物学重复，测序量8~10G，若设置重复，可以将单个样本的测序数据量降低（5~6G），这样分析，依然比不设定重复要好。</p>
-<h4 id="发现真正存在信号的可能性"><a href="#发现真正存在信号的可能性" class="headerlink" title="发现真正存在信号的可能性"></a>发现真正存在信号的可能性</h4><p>首先，还是让我看一下<code>Power</code>的定义</p>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/power.png" alt="Power"></p>
-<p>实验开始时，我们要确定我们的重复数，而通过给定的<code>Power</code>值和预实验，我们可以推导出需要的重复数：</p>
-<p>请看下边两个样本的分布情况（其中有颜色的竖线，代表两个样本的<code>均值</code>）</p>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/power_calculated1.png" alt="两样本的分布"></p>
-<p>通过统计的方法，我们可以计算出需要的重复数：</p>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/replicate-calculated1.png" alt="重复数计算一"></p>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/replicate-calculated2.png" alt="重复数计算二"></p>
-<h4 id="再来谈一下实验设计的另外两个概念：混合分布-Confounding-与随机分布-Randomization"><a href="#再来谈一下实验设计的另外两个概念：混合分布-Confounding-与随机分布-Randomization" class="headerlink" title="再来谈一下实验设计的另外两个概念：混合分布(Confounding)与随机分布(Randomization)"></a>再来谈一下实验设计的另外两个概念：混合分布(Confounding)与随机分布(Randomization)</h4><p>Confounder是指某个变量既和感兴趣的变量有关联，又与希望被关联的另外一个变量有关联</p>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/Confounder.png" alt="Confounder"></p>
-<p>因此，为了避免这种误差的产生，应该注意实验设计的排列方式：</p>
-<p>较好的实验设计方案如下：</p>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/experimental%20design.png" alt="实验设计方案"></p>
-<blockquote>
-<p>实验设计的基本原则</p>
-</blockquote>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/experimental%20design%20rules.png" alt="Experimental design rules"></p>
-<blockquote>
-<p>在真正分析之前，我们可以将数据先<code>可视化</code>原因如下</p>
-</blockquote>
-<ul>
-<li>理解数据内容；</li>
-<li>在数据中，寻找规律（patterns）；</li>
-<li>思考统计模型；</li>
-<li>“调试”分析；</li>
-<li>讨论结果</li>
-</ul>
-<p>关于数据可视化，在文章中，经常看到柱状图，我们必须明白，柱状图可能会丢失一部分信息;</p>
-<p>例如下图，若是做柱状图，我们只会得到一致的<code>bar</code>图，却无法展现数据的真实差异：</p>
-<p><img src="http://osrxne9le.bkt.clouddn.com/bar%20map.png" alt="bar_chart"></p>
-<h4 id="对于可视化，有几个黄金定律："><a href="#对于可视化，有几个黄金定律：" class="headerlink" title="对于可视化，有几个黄金定律："></a>对于可视化，有几个<code>黄金定律</code>：</h4><ul>
-<li>尽可能把数据都展现出来</li>
-<li>明确坐标轴代表的具体含义</li>
-<li>改变作图的方式，会对最终的结果，产生很大的影响</li>
-</ul>
-<blockquote>
-<p>初始的作图结果</p>
-</blockquote>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/primary.png" alt="Primary"></p>
-<blockquote>
-<p>改变之后的结果</p>
-</blockquote>
-<ul>
-<li>在X轴方向取处理样本数据的平均值；</li>
-<li>在y轴方向，对不同处理之间进行比较；</li>
-</ul>
-<p>如此，便得到了常见的<code>MA plot</code>或称<code>Bland-Altman plot</code></p>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/MA%20plot.png" alt="MA plot"></p>
-<p>MA plot主要用来判断重复样本之间重复性，通过观测数据在<code>0 line</code>上下的差异程度，来判断<code>数据的重复性</code></p>
-<ul>
-<li>在中心位置或者从<code>0</code>开始作图</li>
-</ul>
-<p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/centered%20map.png" alt="centered"></p>
-<h4 id="其他资源"><a href="#其他资源" class="headerlink" title="其他资源"></a>其他资源</h4><p><img src="http://osrxne9le.bkt.clouddn.com//genome_statics/further.png" alt="further resource"></p>
-<p>建议看一下Karl Broman的相关资源</p>
-<p>关于实验设计方面的问题，就讲到这里了。之后，我们将进行实际操作，使用<code>R语言</code>中对数据进行统计分析。</p>
+        <p>这一期，我们将针对上一期管理表的知识点，进行一些题目的测试</p>
+<h2 id="从文本文件中读取矩阵"><a href="#从文本文件中读取矩阵" class="headerlink" title="从文本文件中读取矩阵"></a>从文本文件中读取矩阵</h2><p>相似性矩阵内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">	A	G	C	U</div><div class="line">A	1.0	0.5	0.0	0.0</div><div class="line">G	0.5	1.0	0.0	0.0</div><div class="line">C	0.0	0.0	1.0	0.5</div><div class="line">U	0.0	0.0	0.5	1.0</div></pre></td></tr></table></figure></p>
+<p>为了方便代码的书写，我们将第一行的行名修改为<code>cod</code>。否则，程序读取过程中无法将列进行有效的对应。<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"F:/Python_biologist"</span>)</div><div class="line">table = []</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'RNA_sim.table'</span>,<span class="string">'r'</span>):</div><div class="line">	table.append(line.strip().split(<span class="string">'\t'</span>))</div><div class="line"><span class="keyword">for</span> row <span class="keyword">in</span> table:</div><div class="line">	print(row)</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[&apos;cod&apos;, &apos;A&apos;, &apos;G&apos;, &apos;C&apos;, &apos;U&apos;]</div><div class="line">[&apos;A&apos;, &apos;1.0&apos;, &apos;0.5&apos;, &apos;0.0&apos;, &apos;0.0&apos;]</div><div class="line">[&apos;G&apos;, &apos;0.5&apos;, &apos;1.0&apos;, &apos;0.0&apos;, &apos;0.0&apos;]</div><div class="line">[&apos;C&apos;, &apos;0.0&apos;, &apos;0.0&apos;, &apos;1.0&apos;, &apos;0.5&apos;]</div><div class="line">[&apos;U&apos;, &apos;0.0&apos;, &apos;0.0&apos;, &apos;0.5&apos;, &apos;1.0&apos;]</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -480,9 +406,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/R语言/" rel="tag"># R语言</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
-            <a href="/tags/统计学/" rel="tag"># 统计学</a>
+            <a href="/tags/生物信息学/" rel="tag"># 生物信息学</a>
           
         </div>
       
@@ -495,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/11/基因组分析中统计学原理（二）/" rel="next" title="基因组分析中统计学原理（二）">
-                <i class="fa fa-chevron-left"></i> 基因组分析中统计学原理（二）
+              <a href="/2017/08/03/Python-生物信息学数据管理（八）/" rel="next" title="Python 生物信息学数据管理(八)">
+                <i class="fa fa-chevron-left"></i> Python 生物信息学数据管理(八)
               </a>
             
           </div>
@@ -504,10 +430,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/14/基因组分析中统计学原理（四）/" rel="prev" title="基因组分析中统计学原理（四）">
-                基因组分析中统计学原理（四） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -672,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#首先，我们需要明白生物学重复与技术重复之间的区别"><span class="nav-number">1.</span> <span class="nav-text">首先，我们需要明白生物学重复与技术重复之间的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接下来，我们讨论一下对于测序样本多少的问题"><span class="nav-number">2.</span> <span class="nav-text">接下来，我们讨论一下对于测序样本多少的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发现真正存在信号的可能性"><span class="nav-number">3.</span> <span class="nav-text">发现真正存在信号的可能性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再来谈一下实验设计的另外两个概念：混合分布-Confounding-与随机分布-Randomization"><span class="nav-number">4.</span> <span class="nav-text">再来谈一下实验设计的另外两个概念：混合分布(Confounding)与随机分布(Randomization)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对于可视化，有几个黄金定律："><span class="nav-number">5.</span> <span class="nav-text">对于可视化，有几个黄金定律：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他资源"><span class="nav-number">6.</span> <span class="nav-text">其他资源</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从文本文件中读取矩阵"><span class="nav-number">1.</span> <span class="nav-text">从文本文件中读取矩阵</span></a></li></ol></div>
             
 
           </div>
@@ -815,9 +737,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/07/14/基因组分析中统计学原理（三）/';
-          this.page.identifier = '2017/07/14/基因组分析中统计学原理（三）/';
-          this.page.title = '基因组分析中统计学原理（三）';
+          this.page.url = 'http://yoursite.com/2017/08/04/Python-生物信息学数据管理（九）/';
+          this.page.identifier = '2017/08/04/Python-生物信息学数据管理（九）/';
+          this.page.title = 'Python 生物信息学数据管理（九）';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://bioliu.disqus.com/embed.js';
