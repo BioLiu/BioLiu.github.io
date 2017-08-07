@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="BioLiu">
 <meta property="og:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-04T15:25:16.773Z">
+<meta property="og:updated_time" content="2017-08-07T14:59:45.310Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 生物信息学数据管理（九）">
 <meta name="twitter:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
@@ -356,6 +356,9 @@
 <h2 id="从文本文件中读取矩阵"><a href="#从文本文件中读取矩阵" class="headerlink" title="从文本文件中读取矩阵"></a>从文本文件中读取矩阵</h2><p>相似性矩阵内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">	A	G	C	U</div><div class="line">A	1.0	0.5	0.0	0.0</div><div class="line">G	0.5	1.0	0.0	0.0</div><div class="line">C	0.0	0.0	1.0	0.5</div><div class="line">U	0.0	0.0	0.5	1.0</div></pre></td></tr></table></figure></p>
 <p>为了方便代码的书写，我们将第一行的行名修改为<code>cod</code>。否则，程序读取过程中无法将列进行有效的对应。<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"F:/Python_biologist"</span>)</div><div class="line">table = []</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'RNA_sim.table'</span>,<span class="string">'r'</span>):</div><div class="line">	table.append(line.strip().split(<span class="string">'\t'</span>))</div><div class="line"><span class="keyword">for</span> row <span class="keyword">in</span> table:</div><div class="line">	print(row)</div></pre></td></tr></table></figure></p>
 <p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[&apos;cod&apos;, &apos;A&apos;, &apos;G&apos;, &apos;C&apos;, &apos;U&apos;]</div><div class="line">[&apos;A&apos;, &apos;1.0&apos;, &apos;0.5&apos;, &apos;0.0&apos;, &apos;0.0&apos;]</div><div class="line">[&apos;G&apos;, &apos;0.5&apos;, &apos;1.0&apos;, &apos;0.0&apos;, &apos;0.0&apos;]</div><div class="line">[&apos;C&apos;, &apos;0.0&apos;, &apos;0.0&apos;, &apos;1.0&apos;, &apos;0.5&apos;]</div><div class="line">[&apos;U&apos;, &apos;0.0&apos;, &apos;0.0&apos;, &apos;0.5&apos;, &apos;1.0&apos;]</div></pre></td></tr></table></figure></p>
+<h2 id="RNA序列的相似性"><a href="#RNA序列的相似性" class="headerlink" title="RNA序列的相似性"></a>RNA序列的相似性</h2><p>计算两个RNA序列的相似性，序列如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AGCAUCUA</div><div class="line">ACCGUUCU</div></pre></td></tr></table></figure></p>
+<p>此题的关键，是构建嵌套字典的表<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">table = &#123;</div><div class="line">	<span class="string">'A'</span>:&#123;<span class="string">'A'</span>:<span class="number">1.0</span>,<span class="string">'G'</span>:<span class="number">0.5</span>,<span class="string">'C'</span>:<span class="number">0.0</span>,<span class="string">'U'</span>:<span class="number">0.0</span>&#125;,</div><div class="line">	<span class="string">'G'</span>:&#123;<span class="string">'A'</span>:<span class="number">0.5</span>,<span class="string">'G'</span>:<span class="number">1.0</span>,<span class="string">'C'</span>:<span class="number">0.0</span>,<span class="string">'U'</span>:<span class="number">0.0</span>&#125;,</div><div class="line">	<span class="string">'C'</span>:&#123;<span class="string">'A'</span>:<span class="number">0.0</span>,<span class="string">'G'</span>:<span class="number">0.0</span>,<span class="string">'C'</span>:<span class="number">1.0</span>,<span class="string">'U'</span>:<span class="number">0.5</span>&#125;,</div><div class="line">	<span class="string">'U'</span>:&#123;<span class="string">'A'</span>:<span class="number">0.0</span>,<span class="string">'G'</span>:<span class="number">0.0</span>,<span class="string">'C'</span>:<span class="number">0.5</span>,<span class="string">'U'</span>:<span class="number">1.0</span>&#125;</div><div class="line">&#125;</div><div class="line">seq1 = <span class="string">'AGCAUCUA'</span></div><div class="line">seq2 = <span class="string">'ACCGUUCU'</span></div><div class="line">grade = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> base1,base2 <span class="keyword">in</span> zip(seq1,seq2):</div><div class="line">	grade = grade + table[base1][base2]</div><div class="line">print(grade)</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">4.5</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -430,6 +433,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/07/Python-生物信息学数据管理（十）/" rel="prev" title="Python 生物信息学数据管理（十）">
+                Python 生物信息学数据管理（十） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -508,7 +515,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -594,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从文本文件中读取矩阵"><span class="nav-number">1.</span> <span class="nav-text">从文本文件中读取矩阵</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从文本文件中读取矩阵"><span class="nav-number">1.</span> <span class="nav-text">从文本文件中读取矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNA序列的相似性"><span class="nav-number">2.</span> <span class="nav-text">RNA序列的相似性</span></a></li></ol></div>
             
 
           </div>
