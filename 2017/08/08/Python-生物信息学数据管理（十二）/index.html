@@ -1,0 +1,843 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,生物信息学," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="这一期，我们将介绍Python中的模式匹配，并将其应用于文本的挖掘  使用正则表达式表达共有序列 使用Python中的正则表达式工具在字符串中搜索子字符串 在蛋白质中搜索功能性模体(motif) 在文本（例如科学摘要）中搜索给定的词或一组词 在核苷酸序列（例如，转录因子或miRNA的结合位点）中识别模体">
+<meta name="keywords" content="Python,生物信息学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 生物信息学数据管理（十二）">
+<meta property="og:url" content="http://yoursite.com/2017/08/08/Python-生物信息学数据管理（十二）/index.html">
+<meta property="og:site_name" content="BioLiu">
+<meta property="og:description" content="这一期，我们将介绍Python中的模式匹配，并将其应用于文本的挖掘  使用正则表达式表达共有序列 使用Python中的正则表达式工具在字符串中搜索子字符串 在蛋白质中搜索功能性模体(motif) 在文本（例如科学摘要）中搜索给定的词或一组词 在核苷酸序列（例如，转录因子或miRNA的结合位点）中识别模体">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-08T15:23:34.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 生物信息学数据管理（十二）">
+<meta name="twitter:description" content="这一期，我们将介绍Python中的模式匹配，并将其应用于文本的挖掘  使用正则表达式表达共有序列 使用Python中的正则表达式工具在字符串中搜索子字符串 在蛋白质中搜索功能性模体(motif) 在文本（例如科学摘要）中搜索给定的词或一组词 在核苷酸序列（例如，转录因子或miRNA的结合位点）中识别模体">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/08/Python-生物信息学数据管理（十二）/"/>
+
+
+
+
+
+  <title>Python 生物信息学数据管理（十二） | BioLiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BioLiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生信爱好者，小白进阶中</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/08/Python-生物信息学数据管理（十二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liu Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BioLiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理（十二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-08T10:34:01+08:00">
+                2017-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/08/Python-生物信息学数据管理（十二）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/08/08/Python-生物信息学数据管理（十二）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一期，我们将介绍Python中的<code>模式匹配</code>，并将其应用于文本的挖掘</p>
+<ul>
+<li>使用正则表达式表达共有序列</li>
+<li>使用Python中的正则表达式工具在字符串中搜索子字符串</li>
+<li>在蛋白质中搜索功能性模体(motif)</li>
+<li>在文本（例如科学摘要）中搜索给定的词或一组词</li>
+<li>在核苷酸序列（例如，转录因子或miRNA的结合位点）中识别模体<a id="more"></a>
+</li>
+</ul>
+<p>按照惯例，我们将先介绍一个案例</p>
+<h2 id="案例：在蛋白质序列中搜索磷酸化模体"><a href="#案例：在蛋白质序列中搜索磷酸化模体" class="headerlink" title="案例：在蛋白质序列中搜索磷酸化模体"></a>案例：在蛋白质序列中搜索磷酸化模体</h2><p>序列功能模体(sequence functional motif)：能形式功能的短氨基酸或核苷酸序列，含有一个或多个残基的功能区。磷酸化位点、甘露糖基化位点、识别模体、糖基化位点、转录结合位点等都是功能性模体的典型范例。<br>先看一个正则表达式的小例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&apos;AFL&apos;,&apos;GFI&apos;,&apos;AYI&apos;,&apos;GWI&apos;,&apos;GFI&apos;,&apos;AWI&apos;,&apos;GWL&apos;,&apos;GYL&apos;</div><div class="line">#我们可以通过以下单一的方式，表示上述字符</div><div class="line">[AG][FYW][IL]</div></pre></td></tr></table></figure></p>
+<p>开源致力于功能性模体：<br><a href="http://elm.eu.org" target="_blank" rel="external">ELM</a>和<a href="http://prosite.expasy.org" target="_blank" rel="external">PROSITE</a></p>
+<p><a href="http://prosite.expasy.org/scanprosite" target="_blank" rel="external">ScanProsite</a><br>搜索一套蛋白质序列或一组序列是否存在功能性模体，可以进而推断蛋白质的功能。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">seq = <span class="string">'VSVLTMFRYAGLDRLYMLVGTQLAAIIHGVALPLMMLI'</span></div><div class="line"><span class="comment">#re.compile()函数返回正则表达式</span></div><div class="line">pattern = re.compile(<span class="string">'[ST]Q'</span>)</div><div class="line">match = pattern.search(seq)</div><div class="line"><span class="keyword">if</span> match:</div><div class="line">	print(<span class="string">'%10s'</span> % (seq[match.start()<span class="number">-4</span>:match.end()+<span class="number">4</span>]))</div><div class="line">	print(<span class="string">'%6s'</span> % match.group())</div><div class="line"><span class="keyword">else</span>:</div><div class="line">	print(<span class="string">'no match'</span>)</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MLVGTQLAAI</div><div class="line">    TQ</div></pre></td></tr></table></figure>
+<h2 id="命令的含义"><a href="#命令的含义" class="headerlink" title="命令的含义"></a>命令的含义</h2><h3 id="编译正则表达式"><a href="#编译正则表达式" class="headerlink" title="编译正则表达式"></a>编译正则表达式</h3><p><code>compile()</code>编译字符串并把它转换成<code>正则表达对象(RegexpObject)</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>regexp = re.compile(<span class="string">'[ST]Q'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>regexp</div><div class="line">re.compile(<span class="string">'[ST]Q'</span>)</div></pre></td></tr></table></figure></p>
+<p>当然，字符串，也可以记录在变量中<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>motif = <span class="string">'[ST]Q'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>regexp = re.compile(motif)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>regexp</div><div class="line">re.compile(<span class="string">'[ST]Q'</span>)</div></pre></td></tr></table></figure></p>
+<p>我们可以传递参数(编译标志)到<code>compile()</code>方法，总而改变正则表达式某些方面的细节<br>例如，可以忽略大小写：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>regrxp = re.compile(motif,re.IGNORECASE)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>regrxp</div><div class="line">re.compile(<span class="string">'[ST]Q'</span>, re.IGNORECASE)</div></pre></td></tr></table></figure></p>
+<h3 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h3><p>检验正则表达式是否正确的<a href="http://www.regexplanet.com/simple/" target="_blank" rel="external">在线工具</a><br><code>search()</code>函数扫描字符串并寻找正则表达式第一次匹配的位置，其返回的每个序列最多只能有一个单一匹配对象。<code>group()</code>方法打印第一个匹配的对象。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">seq = <span class="string">'RQSAMGSNKSKPKDASQRRRSLEPAENVHGAGGGAFPASQRPSKP'</span></div><div class="line">motif = <span class="string">'R.[ST][^P]'</span></div><div class="line">pattern = re.compile(motif)</div><div class="line">print(pattern)</div><div class="line">match = pattern.search(seq)</div><div class="line">print(match)</div><div class="line">print(match.group())</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">re.compile(&apos;R.[ST][^P]&apos;)</div><div class="line">&lt;_sre.SRE_Match object; span=(0, 4), match=&apos;RQSA&apos;&gt;</div><div class="line">RQSA</div></pre></td></tr></table></figure>
+<p><code>search()</code>方法返回<code>Match object</code>而并非直接返回匹配的字符串，其中编码了匹配的子字符串，以及开始和结束的位置</p>
+<ul>
+<li><code>match.group()</code>    返回匹配字符串</li>
+<li><code>match.span()</code>    返回匹配结果的包含<code>起点和终点</code>位置的元组</li>
+<li><code>match.start()</code>    返回匹配结果的起始位置</li>
+<li><code>match.start()</code>    返回匹配结果的终止位置</li>
+</ul>
+<p>若只从序列的第一位置寻找正则表达式匹配，则使用<code>match()</code>方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">seq = <span class="string">'RQSAMGSNKSKPKDASQRRRSLEPAENVHGAGGGAFPASQRPSKP'</span></div><div class="line">motif = <span class="string">'R.[ST][^P]'</span></div><div class="line">pattern = re.compile(motif)</div><div class="line">print(pattern)</div><div class="line">match = pattern.match(seq)</div><div class="line">print(match)</div><div class="line">print(match.group())</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">re.compile(&apos;R.[ST][^P]&apos;)</div><div class="line">&lt;_sre.SRE_Match object; span=(0, 4), match=&apos;RQSA&apos;&gt;</div><div class="line">RQSA</div></pre></td></tr></table></figure>
+<p><code>search()</code>及<code>match()</code>方法返回<code>匹配对象</code>，该对象可以通过<code>匹配对象</code>方法传递给变量<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>match.span()</div><div class="line">(<span class="number">0</span>, <span class="number">4</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>match.start()</div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>match.end()</div><div class="line"><span class="number">4</span></div></pre></td></tr></table></figure></p>
+<p>我们也可以搜索所有匹配</p>
+<ul>
+<li><code>findall()</code>    返回包含所有匹配的一个字符串列表</li>
+<li><code>finditer()</code>    以<code>迭代器</code>的形式返回，可以通过<code>for</code>遍历</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">seq = <span class="string">'RQSAMGSNKSKPKDASQRRRSLEPAENVHGAGGGAFPASQRPSKP'</span></div><div class="line">motif = <span class="string">'R.[ST][^P]'</span></div><div class="line">pattern = re.compile(motif)</div><div class="line">print(pattern)</div><div class="line">all = pattern.findall(seq)</div><div class="line">print(all)</div><div class="line"></div><div class="line">iter = pattern.finditer(seq)</div><div class="line"><span class="keyword">for</span> s <span class="keyword">in</span> iter:</div><div class="line">	print(s.group())</div><div class="line">	print(s.span())</div><div class="line">	print(s.start())</div><div class="line">	print(s.end())</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">re.compile(&apos;R.[ST][^P]&apos;)</div><div class="line">[&apos;RQSA&apos;, &apos;RRSL&apos;, &apos;RPSK&apos;]</div><div class="line">RQSA</div><div class="line">(0, 4)</div><div class="line">0</div><div class="line">4</div><div class="line">RRSL</div><div class="line">(18, 22)</div><div class="line">18</div><div class="line">22</div><div class="line">RPSK</div><div class="line">(40, 44)</div><div class="line">40</div><div class="line">44</div></pre></td></tr></table></figure>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><p>将一个正则表达式分解为若干组<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">seq = <span class="string">'QSAMGSNKSKPKDASQRRRSLEPAENVHGAGGGAFPASQRPSKP'</span></div><div class="line">pattern1 = re.compile(<span class="string">'R(.)[ST][^P]'</span>)</div><div class="line">match1 = pattern1.search(seq)</div><div class="line">print(match1.group())</div><div class="line">print(match1.group(<span class="number">1</span>))</div><div class="line"></div><div class="line">pattern2 = re.compile(<span class="string">'R(.&#123;0,3&#125;)[ST][^P]'</span>)</div><div class="line">match2 = pattern2.search(seq)</div><div class="line">print(match2.group())</div><div class="line">print(match2.group(<span class="number">1</span>))</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RRSL</div><div class="line">R</div><div class="line">RRRSL</div><div class="line">RR</div></pre></td></tr></table></figure>
+<p><code>group()方法</code>不填写参数或参数等于0，返回完全匹配的子字符串；子组以从左到右编号，向右递增编号(从1开始)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">**注意** 子组可以嵌套，为了得到对应的号码，要计算从左至右有多少左圆括号。</div><div class="line">```Python</div><div class="line">&gt;&gt;&gt; import re</div><div class="line">&gt;&gt;&gt; p = re.compile(&apos;(a(b)c)d&apos;)</div><div class="line">&gt;&gt;&gt; m = p.match(&apos;abcd&apos;)</div><div class="line">&gt;&gt;&gt; m.group(0)</div><div class="line">&apos;abcd&apos;</div><div class="line">&gt;&gt;&gt; m.group(1)</div><div class="line">&apos;abc&apos;</div><div class="line">&gt;&gt;&gt; m.group(2)</div><div class="line">&apos;b&apos;</div></pre></td></tr></table></figure></p>
+<p>向<code>group()</code>传递多个参数，将返回包含各组的值对应的元组<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>)</div><div class="line">(<span class="string">'abc'</span>, <span class="string">'b'</span>, <span class="string">'abc'</span>)</div></pre></td></tr></table></figure></p>
+<p><code>groups()</code>返回所有与<code>子组</code>相关的子字符串<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>m.groups()</div><div class="line">(<span class="string">'abc'</span>, <span class="string">'b'</span>)</div></pre></td></tr></table></figure></p>
+<p>还可以向每个子组分配名称即<code>?P&lt;名&gt;</code>，以便选择性的检索其内容即<code>group(&lt;名&gt;)</code><br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">seq = <span class="string">'QSAMGSNKSKPKDASQRRRSLEPAENVHGAGGGAFPASQRPSKP'</span></div><div class="line">motif = <span class="string">'R(?P&lt;w1&gt;.&#123;0,3&#125;)[ST](?P&lt;w2&gt;[^P])'</span></div><div class="line">pattern = re.compile(motif)</div><div class="line">match = pattern.search(seq)</div><div class="line">print(match.group())</div><div class="line">print(match.group(<span class="string">'w1'</span>))</div><div class="line">print(match.group(<span class="string">'w2'</span>))</div></pre></td></tr></table></figure></p>
+<p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RRRSL</div><div class="line">RR</div><div class="line">L</div></pre></td></tr></table></figure></p>
+<h3 id="修改字符串"><a href="#修改字符串" class="headerlink" title="修改字符串"></a>修改字符串</h3><ul>
+<li><code>split(s)</code>    把字符串分割成列表，用RE即<code>s</code>匹配进行分割</li>
+<li><code>sub(r,s)</code>    找到所有RE匹配的子串，替换成不同的子串</li>
+<li><code>subn(r,s)</code>    与sub()一样，但是返回新字符串的替换的数目</li>
+</ul>
+<h4 id="split-s"><a href="#split-s" class="headerlink" title="split(s)"></a><code>split(s)</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line">separator = re.compile(<span class="string">'\|'</span>)</div><div class="line"></div><div class="line"><span class="comment"># split</span></div><div class="line">annotation = <span class="string">'ATOM:CA|RES:ALA|CHAIN:B|NUMRES:166'</span></div><div class="line">columns = separator.split(annotation)</div><div class="line">print(columns)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[&apos;ATOM:CA&apos;, &apos;RES:ALA&apos;, &apos;CHAIN:B&apos;, &apos;NUMRES:166&apos;]</div></pre></td></tr></table></figure>
+<h2 id="字符和元字符"><a href="#字符和元字符" class="headerlink" title="字符和元字符"></a>字符和元字符</h2><ul>
+<li><code>[^a]</code>    除了a以外的字符</li>
+<li><code>^[a]</code>    a只匹配s的首位</li>
+<li><code>()</code>        在正则表达式中创建子组</li>
+<li><code>*</code>        匹配零次或多次</li>
+<li><code>+</code>        匹配一次或者多次</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>东西写的不错，赏你个硬币，继续加油！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/wechat.jpg" alt="Liu Chen WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/08/alipay.jpg" alt="Liu Chen Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/生物信息学/" rel="tag"># 生物信息学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/07/Python-生物信息学数据管理（十一）/" rel="next" title="Python 生物信息学数据管理（十一）">
+                <i class="fa fa-chevron-left"></i> Python 生物信息学数据管理（十一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Liu Chen" />
+          <p class="site-author-name" itemprop="name">Liu Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Bioinformatiion、Python、R</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bioliu" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2214834675/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/liu-chen-59-34/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/53599f056741/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-jianshu"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：在蛋白质序列中搜索磷酸化模体"><span class="nav-number">1.</span> <span class="nav-text">案例：在蛋白质序列中搜索磷酸化模体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令的含义"><span class="nav-number">2.</span> <span class="nav-text">命令的含义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译正则表达式"><span class="nav-number">2.1.</span> <span class="nav-text">编译正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式匹配"><span class="nav-number">2.2.</span> <span class="nav-text">模式匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分组"><span class="nav-number">2.3.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改字符串"><span class="nav-number">2.4.</span> <span class="nav-text">修改字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#split-s"><span class="nav-number">2.4.1.</span> <span class="nav-text">split(s)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符和元字符"><span class="nav-number">3.</span> <span class="nav-text">字符和元字符</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bioliu.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/08/08/Python-生物信息学数据管理（十二）/';
+          this.page.identifier = '2017/08/08/Python-生物信息学数据管理（十二）/';
+          this.page.title = 'Python 生物信息学数据管理（十二）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bioliu.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

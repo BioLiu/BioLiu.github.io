@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
+<meta name="description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试">
 <meta name="keywords" content="Python,生物信息学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 生物信息学数据管理（九）">
 <meta property="og:url" content="http://yoursite.com/2017/08/04/Python-生物信息学数据管理（九）/index.html">
 <meta property="og:site_name" content="BioLiu">
-<meta property="og:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
+<meta property="og:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-07T14:59:45.310Z">
+<meta property="og:updated_time" content="2017-08-08T15:09:37.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 生物信息学数据管理（九）">
-<meta name="twitter:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试 从文本文件中读取矩阵相似性矩阵内容如下：12345	A	G	C	UA	1.0	0.5	0.0	0.0G	0.5	1.0	0.0	0.0C	0.0	0.0	1.0	0.5U	0.0	0.0	0.5	1.0 为了方便代码的书写，我们将第一行的行名修改为cod。否则，程序读取过程中无法将列进行有效的对应。实现代码如下：1234567import">
+<meta name="twitter:description" content="这一期，我们将针对上一期管理表的知识点，进行一些题目的测试">
 
 
 
@@ -352,7 +352,7 @@
       
 
       
-        <p>这一期，我们将针对上一期管理表的知识点，进行一些题目的测试</p>
+        <p>这一期，我们将针对上一期管理表的知识点，进行一些题目的测试<br><a id="more"></a></p>
 <h2 id="从文本文件中读取矩阵"><a href="#从文本文件中读取矩阵" class="headerlink" title="从文本文件中读取矩阵"></a>从文本文件中读取矩阵</h2><p>相似性矩阵内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">	A	G	C	U</div><div class="line">A	1.0	0.5	0.0	0.0</div><div class="line">G	0.5	1.0	0.0	0.0</div><div class="line">C	0.0	0.0	1.0	0.5</div><div class="line">U	0.0	0.0	0.5	1.0</div></pre></td></tr></table></figure></p>
 <p>为了方便代码的书写，我们将第一行的行名修改为<code>cod</code>。否则，程序读取过程中无法将列进行有效的对应。<br>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.chdir(<span class="string">"F:/Python_biologist"</span>)</div><div class="line">table = []</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'RNA_sim.table'</span>,<span class="string">'r'</span>):</div><div class="line">	table.append(line.strip().split(<span class="string">'\t'</span>))</div><div class="line"><span class="keyword">for</span> row <span class="keyword">in</span> table:</div><div class="line">	print(row)</div></pre></td></tr></table></figure></p>
 <p>输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[&apos;cod&apos;, &apos;A&apos;, &apos;G&apos;, &apos;C&apos;, &apos;U&apos;]</div><div class="line">[&apos;A&apos;, &apos;1.0&apos;, &apos;0.5&apos;, &apos;0.0&apos;, &apos;0.0&apos;]</div><div class="line">[&apos;G&apos;, &apos;0.5&apos;, &apos;1.0&apos;, &apos;0.0&apos;, &apos;0.0&apos;]</div><div class="line">[&apos;C&apos;, &apos;0.0&apos;, &apos;0.0&apos;, &apos;1.0&apos;, &apos;0.5&apos;]</div><div class="line">[&apos;U&apos;, &apos;0.0&apos;, &apos;0.0&apos;, &apos;0.5&apos;, &apos;1.0&apos;]</div></pre></td></tr></table></figure></p>
@@ -515,7 +515,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
