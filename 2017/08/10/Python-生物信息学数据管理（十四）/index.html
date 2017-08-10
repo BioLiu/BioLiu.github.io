@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,生物信息学," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="这一期开始，将开始介绍模块化编程的知识，使用函数更好的组织程序  编写自己的函数 从蛋白质结构的坐标中提取序列 有选择性地从PDB文件中提取信息 计算蛋白质或DNA三维结构中的原子间距">
+<meta name="keywords" content="Python,生物信息学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 生物信息学数据管理（十四）">
+<meta property="og:url" content="http://yoursite.com/2017/08/10/Python-生物信息学数据管理（十四）/index.html">
+<meta property="og:site_name" content="BioLiu">
+<meta property="og:description" content="这一期开始，将开始介绍模块化编程的知识，使用函数更好的组织程序  编写自己的函数 从蛋白质结构的坐标中提取序列 有选择性地从PDB文件中提取信息 计算蛋白质或DNA三维结构中的原子间距">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-10T14:54:10.446Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 生物信息学数据管理（十四）">
+<meta name="twitter:description" content="这一期开始，将开始介绍模块化编程的知识，使用函数更好的组织程序  编写自己的函数 从蛋白质结构的坐标中提取序列 有选择性地从PDB文件中提取信息 计算蛋白质或DNA三维结构中的原子间距">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/10/Python-生物信息学数据管理（十四）/"/>
+
+
+
+
+
+  <title>Python 生物信息学数据管理（十四） | BioLiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BioLiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生信爱好者，小白进阶中</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/Python-生物信息学数据管理（十四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liu Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BioLiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 生物信息学数据管理（十四）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T14:14:35+08:00">
+                2017-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/10/Python-生物信息学数据管理（十四）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/08/10/Python-生物信息学数据管理（十四）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一期开始，将开始介绍模块化编程的知识，使用函数更好的组织程序</p>
+<ul>
+<li>编写自己的函数</li>
+<li>从蛋白质结构的坐标中提取序列</li>
+<li>有选择性地从PDB文件中提取信息</li>
+<li>计算蛋白质或DNA三维结构中的原子间距<a id="more"></a>
+</li>
+</ul>
+<p>按照惯例，我们先从一个案例，引入所学内容</p>
+<h2 id="案例：处理三维坐标文件"><a href="#案例：处理三维坐标文件" class="headerlink" title="案例：处理三维坐标文件"></a>案例：处理三维坐标文件</h2><p><a href="http://www.rcsb.org" target="_blank" rel="external">蛋白质数据库</a><br>蛋白质或核苷酸三维结构(3D)结构储存在PDB文件中，PDB文件包含：</p>
+<ul>
+<li>生物分子注释</li>
+<li>原子坐标(x,y,z)</li>
+</ul>
+<p>接下来，将从蛋白质的三维坐标中提取氨基酸序列</p>
+<h3 id="PDB记录"><a href="#PDB记录" class="headerlink" title="PDB记录"></a>PDB记录</h3><p>开头部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">HEADER    HYDROLASE (SERINE PROTEINASE)           24-JUL-89   1TLD              </div><div class="line">TITLE     CRYSTAL STRUCTURE OF BOVINE BETA-TRYPSIN AT 1.5 ANGSTROMS             </div><div class="line">TITLE    2 RESOLUTION IN A CRYSTAL FORM WITH LOW MOLECULAR PACKING              </div><div class="line">TITLE    3 DENSITY. ACTIVE SITE GEOMETRY, ION PAIRS AND SOLVENT                 </div><div class="line">TITLE    4 STRUCTURE                                                            </div><div class="line">COMPND    MOL_ID: 1;                                                            </div><div class="line">COMPND   2 MOLECULE: BETA-TRYPSIN;                                              </div><div class="line">COMPND   3 CHAIN: A;                                                            </div><div class="line">COMPND   4 EC: 3.4.21.4;                                                        </div><div class="line">COMPND   5 ENGINEERED: YES                                                      </div><div class="line">SOURCE    MOL_ID: 1;                                                            </div><div class="line">SOURCE   2 ORGANISM_SCIENTIFIC: BOS TAURUS;                                     </div><div class="line">SOURCE   3 ORGANISM_COMMON: CATTLE;                                             </div><div class="line">SOURCE   4 ORGANISM_TAXID: 9913                                                 </div><div class="line">KEYWDS    HYDROLASE (SERINE PROTEINASE)                                         </div><div class="line">EXPDTA    X-RAY DIFFRACTION                                                     </div><div class="line">AUTHOR    H.D.BARTUNIK,L.J.SUMMERS,H.H.BARTSCH                                  </div><div class="line">REVDAT   4   24-FEB-09 1TLD    1       VERSN                                    </div><div class="line">REVDAT   3   01-APR-03 1TLD    1       JRNL                                     </div><div class="line">REVDAT   2   15-OCT-92 1TLD    1       JRNL                                     </div><div class="line">REVDAT   1   15-JAN-90 1TLD    0</div></pre></td></tr></table></figure></p>
+<p>原子坐标行的部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">ATOM      1  N   ILE A  16      11.024   3.226  26.760  1.00 16.50           N  </div><div class="line">ATOM      2  CA  ILE A  16      10.964   3.575  25.323  1.00 16.50           C  </div><div class="line">ATOM      3  C   ILE A  16      10.526   5.038  25.179  1.00 16.50           C  </div><div class="line">ATOM      4  O   ILE A  16       9.469   5.416  25.713  1.00 16.50           O  </div><div class="line">ATOM      5  CB  ILE A  16       9.925   2.674  24.550  1.00 16.50           C  </div><div class="line">ATOM      6  CG1 ILE A  16      10.116   1.146  24.726  1.00 12.88           C  </div><div class="line">ATOM      7  CG2 ILE A  16       9.623   3.078  23.080  1.00 12.88           C  </div><div class="line">ATOM      8  CD1 ILE A  16      11.281   0.591  23.918  1.00 12.88           C  </div><div class="line">ATOM      9  N   VAL A  17      11.340   5.867  24.571  1.00 15.16           N  </div><div class="line">ATOM     10  CA  VAL A  17      11.081   7.316  24.323  1.00 15.16           C  </div><div class="line">ATOM     11  C   VAL A  17      10.623   7.484  22.876  1.00 15.16           C  </div><div class="line">ATOM     12  O   VAL A  17      11.101   6.747  21.987  1.00 15.16           O  </div><div class="line">ATOM     13  CB  VAL A  17      12.395   8.133  24.544  1.00 15.16           C  </div><div class="line">ATOM     14  CG1 VAL A  17      12.131   9.608  24.314  1.00 12.93           C  </div><div class="line">ATOM     15  CG2 VAL A  17      12.902   7.918  25.967  1.00 12.93           C  </div><div class="line">ATOM     16  N   GLY A  18       9.482   8.168  22.673  1.00 19.68           N  </div><div class="line">ATOM     17  CA  GLY A  18       8.934   8.377  21.316  1.00 19.68           C  </div><div class="line">ATOM     18  C   GLY A  18       8.131   7.219  20.729  1.00 19.68           C  </div><div class="line">ATOM     19  O   GLY A  18       7.996   7.147  19.486  1.00 19.68           O  </div><div class="line">ATOM     20  N   GLY A  19       7.768   6.262  21.561  1.00 16.15           N  </div><div class="line">ATOM     21  CA  GLY A  19       7.147   5.070  21.034  1.00 16.15           C  </div><div class="line">ATOM     22  C   GLY A  19       5.645   5.124  21.168  1.00 16.15           C  </div><div class="line">ATOM     23  O   GLY A  19       5.079   6.243  21.243  1.00 16.15           O  </div><div class="line">ATOM     24  N   TYR A  20       4.998   3.968  21.130  1.00 17.79           N  </div><div class="line">ATOM     25  CA  TYR A  20       3.558   3.899  21.265  1.00 17.79           C  </div><div class="line">ATOM     26  C   TYR A  20       3.115   2.787  22.211  1.00 17.79           C  </div><div class="line">ATOM     27  O   TYR A  20       3.855   1.793  22.367  1.00 17.79           O  </div><div class="line">ATOM     28  CB  TYR A  20       2.892   3.741  19.871  1.00 17.79           C  </div><div class="line">ATOM     29  CG  TYR A  20       3.358   2.521  19.047  1.00 16.95           C  </div><div class="line">ATOM     30  CD1 TYR A  20       2.621   1.351  19.034  1.00 16.95           C  </div><div class="line">ATOM     31  CD2 TYR A  20       4.522   2.625  18.286  1.00 16.95           C</div></pre></td></tr></table></figure></p>
+<p>实现代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> struct</div><div class="line"></div><div class="line">pdb_format = <span class="string">'6s5s1s4s1s3s1s1s4s1s3s8s8s8s6s6s10s2s3s'</span></div><div class="line"></div><div class="line">amino_acids = &#123;</div><div class="line">    <span class="string">'ALA'</span>:<span class="string">'A'</span>, <span class="string">'CYS'</span>:<span class="string">'C'</span>, <span class="string">'ASP'</span>:<span class="string">'D'</span>, <span class="string">'GLU'</span>:<span class="string">'E'</span>,</div><div class="line">    <span class="string">'PHE'</span>:<span class="string">'F'</span>, <span class="string">'GLY'</span>:<span class="string">'G'</span>, <span class="string">'HIS'</span>:<span class="string">'H'</span>, <span class="string">'LYS'</span>:<span class="string">'K'</span>,</div><div class="line">    <span class="string">'ILE'</span>:<span class="string">'I'</span>, <span class="string">'LEU'</span>:<span class="string">'L'</span>, <span class="string">'MET'</span>:<span class="string">'M'</span>, <span class="string">'ASN'</span>:<span class="string">'N'</span>,</div><div class="line">    <span class="string">'PRO'</span>:<span class="string">'P'</span>, <span class="string">'GLN'</span>:<span class="string">'Q'</span>, <span class="string">'ARG'</span>:<span class="string">'R'</span>, <span class="string">'SER'</span>:<span class="string">'S'</span>,</div><div class="line">    <span class="string">'THR'</span>:<span class="string">'T'</span>, <span class="string">'VAL'</span>:<span class="string">'V'</span>, <span class="string">'TYR'</span>:<span class="string">'Y'</span>, <span class="string">'TRP'</span>:<span class="string">'W'</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">threeletter2oneletter</span><span class="params">(residues)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    Converts the first element of each residue</div><div class="line">    to a one letter amino acid symbol</div><div class="line">    '''</div><div class="line">    <span class="keyword">for</span> i, threeletter <span class="keyword">in</span> enumerate(residues):</div><div class="line">        residues[i][<span class="number">0</span>] = amino_acids[threeletter[<span class="number">0</span>]]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_residues</span><span class="params">(pdb_file)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    Reads the PDB input file, extracts the</div><div class="line">    residue type and chain from the CA lines</div><div class="line">    and appends both to the residues list</div><div class="line">    '''</div><div class="line">    residues = []</div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> pdb_file:</div><div class="line">        <span class="keyword">if</span> line[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">"ATOM"</span>:</div><div class="line">        	tmp = struct.unpack(pdb_format, line)</div><div class="line">        	ca = tmp[<span class="number">3</span>].strip()</div><div class="line">        	<span class="keyword">if</span> ca == <span class="string">'CA'</span>:</div><div class="line">        		res_type = tmp[<span class="number">5</span>].strip()</div><div class="line">        		chain = tmp[<span class="number">7</span>]</div><div class="line">        		residues.append([res_type, chain])</div><div class="line">    <span class="keyword">return</span> residues</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_fasta_records</span><span class="params">(residues, pdb_id, fasta_file)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    Write a FASTA record for each PDB chain</div><div class="line">    '''</div><div class="line">    seq = <span class="string">''</span></div><div class="line">    chain = residues[<span class="number">0</span>][<span class="number">1</span>]</div><div class="line">    <span class="keyword">for</span> aa, new_chain <span class="keyword">in</span> residues:</div><div class="line">        <span class="keyword">if</span> new_chain == chain:</div><div class="line">            seq = seq + aa</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="comment"># write sequence in FASTA format</span></div><div class="line">            fasta_file.write(<span class="string">"&gt;%s_%s\n%s\n"</span> % (pdb_id, chain, seq))</div><div class="line">            seq = aa</div><div class="line">            chain = new_chain</div><div class="line">    <span class="comment"># write the last PDB chain</span></div><div class="line">    fasta_file.write(<span class="string">"&gt;%s_%s\n%s\n"</span> % (pdb_id, chain, seq))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_sequence</span><span class="params">(pdb_id)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    Main function: Opens files, writes files</div><div class="line">    and calls other functions.</div><div class="line">    '''</div><div class="line">    pdb_file = open(pdb_id + <span class="string">".pdb"</span>)</div><div class="line">    fasta_file = open(pdb_id + <span class="string">".fasta"</span>, <span class="string">"w"</span>)</div><div class="line">    residues = get_residues(pdb_file)</div><div class="line">    threeletter2oneletter(residues)</div><div class="line">    write_fasta_records(residues, pdb_id, fasta_file)</div><div class="line">    pdb_file.close()</div><div class="line">    fasta_file.close()</div><div class="line">    </div><div class="line"><span class="comment"># call the main function</span></div><div class="line">extract_sequence(<span class="string">"3G5U"</span>)</div></pre></td></tr></table></figure></p>
+<h2 id="命令的含义"><a href="#命令的含义" class="headerlink" title="命令的含义"></a>命令的含义</h2><ul>
+<li><code>get_residues(pdb_file)</code>读取PDB输入文件，提取氨基酸三字码和链型，将每个氨基酸残基组成[res_type,chain]储存在名为residues的Python列表中。通过名称’CA’(if ca == ‘CA’)确保每个残基只使用一次</li>
+<li><code>threeletter2oneletter(residues)</code>将氨基酸三字码转换为单字码，内置函数enumerate(residues)生成(n,residues[n])形式的元组，此处n为从零计数的整数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>data = [[<span class="string">'ALA'</span>,<span class="string">'A'</span>],[<span class="string">'CYS'</span>,<span class="string">'A'</span>]]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i,j <span class="keyword">in</span> enumerate(data):</div><div class="line">	print(i,j)</div><div class="line"></div><div class="line"><span class="number">0</span> [<span class="string">'ALA'</span>, <span class="string">'A'</span>]</div><div class="line"><span class="number">1</span> [<span class="string">'CYS'</span>, <span class="string">'A'</span>]</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>write_fasta_records(residues,pdb_id,fasta_file)函数将残基列表格式化为FASTA格式的字符串</li>
+</ul>
+<h3 id="定义和调用函数"><a href="#定义和调用函数" class="headerlink" title="定义和调用函数"></a>定义和调用函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addition</span><span class="params">(num1,num2)</span>:</span></div><div class="line">	<span class="string">'''calculates the sum of two numbers'''</span></div><div class="line">	result = num1+num2</div><div class="line">	<span class="keyword">return</span> result</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>help(addition)</div><div class="line">Help on function addition <span class="keyword">in</span> module __main__:</div><div class="line"></div><div class="line">addition(num1, num2)</div><div class="line">    calculates the sum of two numbers</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>results = addition(<span class="number">12</span>,<span class="number">9</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(results)</div><div class="line"><span class="number">21</span></div></pre></td></tr></table></figure>
+<h3 id="带有range-和xrange-的循环"><a href="#带有range-和xrange-的循环" class="headerlink" title="带有range()和xrange()的循环"></a>带有<code>range()</code>和<code>xrange()</code>的循环</h3><ul>
+<li><code>range(n,m)</code>创建从n到m-1的整数</li>
+<li><code>xrange(n,m)</code>用于创建<code>迭代器</code>，<code>xrange()</code>仅在需要时生成与对应列表相同的值，占内存更小，可用于很大的数值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">	print(i ** <span class="number">2</span>)</div><div class="line"></div><div class="line"><span class="number">0</span></div><div class="line"><span class="number">1</span></div><div class="line"><span class="number">4</span></div><div class="line"><span class="number">9</span></div><div class="line"><span class="number">16</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<p>指定<code>步长</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">range([start],stop,[step])</div></pre></td></tr></table></figure></p>
+<h3 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h3><p>几乎所有对象，都可以作为函数的参数，函数调用的结果，也可以作为另外一个函数的参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">increment</span><span class="params">(number)</span>:</span></div><div class="line">	<span class="string">'''returns the given number plus one'''</span></div><div class="line">	<span class="keyword">return</span> number+<span class="number">1</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_arg</span><span class="params">(number)</span>:</span></div><div class="line">	<span class="string">'''prints the argument'''</span></div><div class="line">	print(number)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_arg(increment(<span class="number">6</span>))</div><div class="line"><span class="number">7</span></div></pre></td></tr></table></figure></p>
+<h3 id="多个参数与返回值均为元组"><a href="#多个参数与返回值均为元组" class="headerlink" title="多个参数与返回值均为元组"></a>多个参数与返回值均为元组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(a,b)</span>:</span></div><div class="line">	<span class="keyword">return</span> a+b,a*b,a-b</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f(<span class="number">10</span>,<span class="number">15</span>)</div><div class="line">(<span class="number">25</span>, <span class="number">150</span>, <span class="number">-5</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = f(<span class="number">10</span>,<span class="number">15</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result</div><div class="line">(<span class="number">25</span>, <span class="number">150</span>, <span class="number">-5</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sum,prod,diff = f(<span class="number">10</span>,<span class="number">15</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sum</div><div class="line"><span class="number">25</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>prod</div><div class="line"><span class="number">150</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>diff</div><div class="line"><span class="number">-5</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<h3 id="lambda函数-匿名函数"><a href="#lambda函数-匿名函数" class="headerlink" title="lambda函数(匿名函数)"></a>lambda函数(匿名函数)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span><span class="keyword">return</span> x ** <span class="number">2</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(f(<span class="number">8</span>))</div><div class="line"><span class="number">64</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>g = <span class="keyword">lambda</span> x: x**<span class="number">2</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(g(<span class="number">8</span>))</div><div class="line"><span class="number">64</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="keyword">lambda</span> x: x**<span class="number">2</span>)(<span class="number">9</span>)</div><div class="line"><span class="number">81</span></div></pre></td></tr></table></figure>
+<h3 id="四类参数"><a href="#四类参数" class="headerlink" title="四类参数"></a>四类参数</h3><h4 id="必选参数"><a href="#必选参数" class="headerlink" title="必选参数"></a>必选参数</h4><p>一个或多个参数必须传递给函数，参数在调用中的顺序必须与函数定义中的顺序完全一致<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">print_funct</span><span class="params">(num,seq)</span>:</span></div><div class="line">	print(num,seq)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(<span class="number">10</span>,<span class="string">"ACT"</span>)</div><div class="line"><span class="number">10</span> ACT</div></pre></td></tr></table></figure></p>
+<h4 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h4><p>给函数的参数分配一个名称，可以忽略顺序<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(seq = <span class="string">'ACT'</span>,num= <span class="number">10</span>)</div><div class="line"><span class="number">10</span> ACT</div></pre></td></tr></table></figure></p>
+<h4 id="默认参数-可选参数"><a href="#默认参数-可选参数" class="headerlink" title="默认参数(可选参数)"></a>默认参数(可选参数)</h4><ul>
+<li>默认参数为不可变参数<code>数字</code>，<code>字符串</code></li>
+<li>默认参数，必须放在<code>函数定义的最后位置</code><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">print_funct</span><span class="params">(num,seq=<span class="string">'A'</span>)</span>:</span></div><div class="line">	print(num,seq)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(<span class="number">10</span>,seq=<span class="string">'ACT'</span>)</div><div class="line"><span class="number">10</span> ACT</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(<span class="number">10</span>)</div><div class="line"><span class="number">10</span> A</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="变长参数"><a href="#变长参数" class="headerlink" title="变长参数"></a>变长参数</h4><p>参数的个数是可变的(即函数的一个调用和另一个调用的参数个数是不同的)</p>
+<ul>
+<li>对于元组参数符号<code>*</code></li>
+<li>对于字典参数符号<code>**</code></li>
+</ul>
+<p><strong>元组</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">print_args</span><span class="params">(*args)</span>:</span></div><div class="line">	print(*args)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_args(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</div><div class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_args(<span class="string">"Hello,world"</span>)</div><div class="line">Hello,world</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_args(<span class="number">100</span>,<span class="number">200</span>,<span class="string">"ACG"</span>)</div><div class="line"><span class="number">100</span> <span class="number">200</span> ACG</div></pre></td></tr></table></figure></p>
+<p><strong>字典</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">### struct模块</div><div class="line">提供在自定义格式基础上将字符串转换成元组的方法</div><div class="line">由于博主使用的是3.6版本Python的struct模块与2.7之间存在很大改动，尤其是该期讲的`s`，在3.6版本中，后边的变量需要`bytes`类型，所以，接下来，穿插一下Python中string与bytes类型之间的相互转换。</div><div class="line">按照utf-8方式编码</div><div class="line">```Python</div><div class="line">&gt;&gt;&gt; string = "Hello"</div><div class="line">&gt;&gt;&gt; type(string)</div><div class="line">&lt;class 'str'&gt;</div><div class="line">&gt;&gt;&gt; string_bytes_utf8 = string.encode(encoding='utf-8')</div><div class="line">&gt;&gt;&gt; type(string_bytes_utf8)</div><div class="line">&lt;class 'bytes'&gt;</div><div class="line">&gt;&gt;&gt; string</div><div class="line">'Hello'</div><div class="line">&gt;&gt;&gt; string_bytes_utf8</div><div class="line">b'Hello'</div></pre></td></tr></table></figure></p>
+<p>按照gb2312方式编码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>string_bytes_gb2312 = string.encode(encoding=<span class="string">'gb2312'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>string_bytes_gb2312</div><div class="line"><span class="string">b'Hello'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(string_bytes_gb2312)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">bytes</span>'&gt;</span></div></pre></td></tr></table></figure></p>
+<p>解码成string，默认不填<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; bytes2string = string_bytes_utf8.decode()</div><div class="line">&gt;&gt;&gt; type(bytes2string)</div><div class="line">&lt;class 'str'&gt;</div><div class="line">&gt;&gt;&gt; bytes2string</div><div class="line">'Hello'</div></pre></td></tr></table></figure></p>
+<p>解码成string，使用gb2312的方式<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; bytes2string_gb2312 = string_bytes_gb2312.decode("gb2312")</div><div class="line">&gt;&gt;&gt; type(bytes2string_gb2312)</div><div class="line">&lt;class 'str'&gt;</div><div class="line">&gt;&gt;&gt; bytes2string_gb2312</div><div class="line">'Hello'</div></pre></td></tr></table></figure></p>
+<h4 id="stuct-pack-压缩"><a href="#stuct-pack-压缩" class="headerlink" title="stuct.pack()压缩"></a><code>stuct.pack()</code>压缩</h4>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>东西写的不错，赏你个硬币，继续加油！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/wechat.jpg" alt="Liu Chen WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://osrxne9le.bkt.clouddn.com/2017/07/08/alipay.jpg" alt="Liu Chen Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/生物信息学/" rel="tag"># 生物信息学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/09/Python-生物信息学数据管理（十三）/" rel="next" title="Python 生物信息学数据管理（十三）">
+                <i class="fa fa-chevron-left"></i> Python 生物信息学数据管理（十三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Liu Chen" />
+          <p class="site-author-name" itemprop="name">Liu Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Bioinformatiion、Python、R</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bioliu" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2214834675/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/liu-chen-59-34/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/53599f056741/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-jianshu"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：处理三维坐标文件"><span class="nav-number">1.</span> <span class="nav-text">案例：处理三维坐标文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PDB记录"><span class="nav-number">1.1.</span> <span class="nav-text">PDB记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令的含义"><span class="nav-number">2.</span> <span class="nav-text">命令的含义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义和调用函数"><span class="nav-number">2.1.</span> <span class="nav-text">定义和调用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带有range-和xrange-的循环"><span class="nav-number">2.2.</span> <span class="nav-text">带有range()和xrange()的循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的参数"><span class="nav-number">2.3.</span> <span class="nav-text">函数的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个参数与返回值均为元组"><span class="nav-number">2.4.</span> <span class="nav-text">多个参数与返回值均为元组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda函数-匿名函数"><span class="nav-number">2.5.</span> <span class="nav-text">lambda函数(匿名函数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四类参数"><span class="nav-number">2.6.</span> <span class="nav-text">四类参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#必选参数"><span class="nav-number">2.6.1.</span> <span class="nav-text">必选参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关键字参数"><span class="nav-number">2.6.2.</span> <span class="nav-text">关键字参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认参数-可选参数"><span class="nav-number">2.6.3.</span> <span class="nav-text">默认参数(可选参数)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变长参数"><span class="nav-number">2.6.4.</span> <span class="nav-text">变长参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stuct-pack-压缩"><span class="nav-number">2.6.5.</span> <span class="nav-text">stuct.pack()压缩</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bioliu.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/08/10/Python-生物信息学数据管理（十四）/';
+          this.page.identifier = '2017/08/10/Python-生物信息学数据管理（十四）/';
+          this.page.title = 'Python 生物信息学数据管理（十四）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bioliu.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
