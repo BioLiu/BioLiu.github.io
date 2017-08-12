@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="BioLiu">
 <meta property="og:description" content="这一期开始，将开始介绍模块化编程的知识，使用函数更好的组织程序  编写自己的函数 从蛋白质结构的坐标中提取序列 有选择性地从PDB文件中提取信息 计算蛋白质或DNA三维结构中的原子间距">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-10T14:54:10.446Z">
+<meta property="og:updated_time" content="2017-08-10T14:56:53.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 生物信息学数据管理（十四）">
 <meta name="twitter:description" content="这一期开始，将开始介绍模块化编程的知识，使用函数更好的组织程序  编写自己的函数 从蛋白质结构的坐标中提取序列 有选择性地从PDB文件中提取信息 计算蛋白质或DNA三维结构中的原子间距">
@@ -392,9 +392,9 @@
 <h4 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h4><p>给函数的参数分配一个名称，可以忽略顺序<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(seq = <span class="string">'ACT'</span>,num= <span class="number">10</span>)</div><div class="line"><span class="number">10</span> ACT</div></pre></td></tr></table></figure></p>
 <h4 id="默认参数-可选参数"><a href="#默认参数-可选参数" class="headerlink" title="默认参数(可选参数)"></a>默认参数(可选参数)</h4><ul>
 <li>默认参数为不可变参数<code>数字</code>，<code>字符串</code></li>
-<li>默认参数，必须放在<code>函数定义的最后位置</code><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">print_funct</span><span class="params">(num,seq=<span class="string">'A'</span>)</span>:</span></div><div class="line">	print(num,seq)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(<span class="number">10</span>,seq=<span class="string">'ACT'</span>)</div><div class="line"><span class="number">10</span> ACT</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(<span class="number">10</span>)</div><div class="line"><span class="number">10</span> A</div></pre></td></tr></table></figure>
-</li>
+<li>默认参数，必须放在<code>函数定义的最后位置</code></li>
 </ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">print_funct</span><span class="params">(num,seq=<span class="string">'A'</span>)</span>:</span></div><div class="line">	print(num,seq)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(<span class="number">10</span>,seq=<span class="string">'ACT'</span>)</div><div class="line"><span class="number">10</span> ACT</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print_funct(<span class="number">10</span>)</div><div class="line"><span class="number">10</span> A</div></pre></td></tr></table></figure>
 <h4 id="变长参数"><a href="#变长参数" class="headerlink" title="变长参数"></a>变长参数</h4><p>参数的个数是可变的(即函数的一个调用和另一个调用的参数个数是不同的)</p>
 <ul>
 <li>对于元组参数符号<code>*</code></li>
@@ -480,6 +480,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/08/12/Python-生物信息学数据管理（十五）/" rel="prev" title="Python 生物信息学数据管理（十五）">
+                Python 生物信息学数据管理（十五） <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -557,7 +561,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
